@@ -1,22 +1,14 @@
-import {
-    View,
-    Button,
-    Image,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    ScrollView
-  } from "react-native";
-import { Routes } from "../../Constant/Routes";
+import {View,Button,Image,Text,TextInput,TouchableOpacity,ScrollView} from "react-native";
+import { Routes } from "../Constant/Routes";
   // import { ScrollView } from "react-native-reanimated";
   const SignupScreen = ({navigation}:any) => {
     return (
       <ScrollView>
       <View className="bg-white h-[820] w-full">
-        <Image className="h-full w-full absolute" source={require("../../../assets/images/background.png")}  />
+        <Image className="h-full w-full absolute" source={require("../../assets/images/background.png")}  />
         <View className="flex-row justify-around w-full absolute">
-          <Image className="h-[225] w-[90]" source={require("../../../assets/images/light.png")} />
-          <Image className="h-[160] w-[65]" source={require("../../../assets/images/light.png")} />
+          <Image className="h-[225] w-[90]" source={require("../../assets/images/light.png")} />
+          <Image className="h-[160] w-[65]" source={require("../../assets/images/light.png")} />
         </View>
         <View className="h-full w-full flex justify-around pt-60 pb-10">
           <View className="flex items-center">
@@ -37,7 +29,7 @@ import { Routes } from "../../Constant/Routes";
               />
             </View>
             <View className="w-full">
-              <TouchableOpacity onPress={()=>navigation.navigate(Routes.PRIVATE)} className="w-full bg-sky-400 p-3 rounded-2xl mb-3">
+              <TouchableOpacity onPress={()=>navigation.navigate(Routes.DASHBOARD)} className="w-full bg-sky-400 p-3 rounded-2xl mb-3">
                 <Text className="text-xl font-bold text-white text-center">
                   Submit
                 </Text>
