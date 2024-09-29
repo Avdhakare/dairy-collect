@@ -1,13 +1,11 @@
 import { TouchableOpacity, View,Text,Image } from "react-native";
-import Container from "./Container";
 import React from "react";
-import { profile } from "../Constant";
 import AntDesign from '@expo/vector-icons/AntDesign';
 const UserCard=({item,ContainerClick,onPress}:any)=>{
     function epochToDateString(epoch:any) {
         const date = new Date(parseInt(epoch));
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
     }

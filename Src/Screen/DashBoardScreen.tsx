@@ -1,10 +1,7 @@
 import { Text, TouchableOpacity, View,Image, FlatList } from "react-native"
-import Container from "../Common/Container";
 import {AntDesign} from '@expo/vector-icons';   
 import React, { useEffect, useState } from "react";
 import { profile, slipData, user } from "../Constant";
-import AddPopup from "../Common/AddPopup";
-import DetailModel from "../Common/DetailModel";
 import { Routes } from "../Constant/Routes";
 import UserCard from "../Common/UserCard";
 

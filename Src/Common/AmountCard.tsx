@@ -1,12 +1,6 @@
 
-import React, { useState } from "react"
-import { ScrollView,Text, TouchableOpacity, View } from "react-native"
-import { detailTable } from "../Constant"
-
-
-
-const  AmountCard=({setHideProfile}:any)=>{
-    return(
+import {Text, TouchableOpacity, View } from "react-native"
+const  AmountCard=()=>(
         <View className="bg-white shadow-md p-2 rounded-lg border border-green-400 m-2">
             <Text className="text-blue-500 font-bold text-base">Date : 20/05/2000</Text>
             <View className="flex-1 flex-wrap flex-row justify-between px-2">
@@ -41,6 +35,4 @@ const  AmountCard=({setHideProfile}:any)=>{
             </View>
         </View>
     )
-} 
-
 export default AmountCard;
