@@ -1,16 +1,14 @@
 import { Text, TouchableOpacity, View,Image, FlatList } from "react-native"
 import Container from "../Common/Container";
-import {AntDesign} from '@expo/vector-icons';
+import {AntDesign} from '@expo/vector-icons';   
 import React, { useEffect, useState } from "react";
 import { profile, slipData, user } from "../Constant";
-import UserList from "../Common/UserLIst";
 import AddPopup from "../Common/AddPopup";
 import DetailModel from "../Common/DetailModel";
 import { Routes } from "../Constant/Routes";
+import UserCard from "../Common/UserCard";
 
 const DashBoardScreen=({navigation}:any)=>{
-    const[isDetails,setIsDetails]=useState<profile| null>(null)
-    console.log(navigation)
     const[entries,setEntries]=useState<profile[]>([
         {
           "dueAmount": 10, 
@@ -32,21 +30,21 @@ const DashBoardScreen=({navigation}:any)=>{
                      <AntDesign name="adduser" size={30} color="green"/>
                 </TouchableOpacity>
             ),
-            title:''
+            title:'',
+            headerLeft:()=>(
+                <View>
+                    <Text></Text>
+                </View>
+            )
          })
 
     },[navigation])
     return(
        <View>
-        <DetailModel isVisible={isDetails!==null?true:false} onClose={()=>setIsDetails(null) } onSubmit={()=>console.log("onsubmit") } actualPrice={{
-                SNFRate:20,
-                FATRate:20,
-                actualRate:20
-            }}/>
         <FlatList<profile>
             data={entries}
             renderItem={(item)=>(
-                <UserList 
+                <UserCard 
                     {...item} 
                     ContainerClick={(item:profile)=>navigation.navigate(Routes.USER_DETAILS,{item})} 
                     onPress={(item:profile)=>navigation.navigate(Routes.ADD_DETAILS_MODAL,{item})} 

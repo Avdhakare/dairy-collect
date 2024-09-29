@@ -7,21 +7,21 @@ import DashBoardScreen from "../Screen/DashBoardScreen";
 import AddUserScreen from "../Screen/AddUserScreen";
 import AddDetailsScreen from "../Screen/AddDetailsScreen";
 import DetailsScreen from "../Screen/DetailsScreen";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { TouchableOpacity } from "react-native";
 
 const AppNavigator=()=>{
   const Stack = createNativeStackNavigator<any>();
-  const isSignIN=true;
+  const isSignIN=false;
 return(
   <NavigationContainer >
     <Stack.Navigator 
       initialRouteName={isSignIN ?Routes.DASHBOARD :Routes.LOGIN}
       screenOptions={{
         headerStyle: { backgroundColor: "#CAF4FF" }, 
-        headerTitleStyle: {
-          fontSize:18,
-          color: "#000"
-         },
-         headerTitleAlign:"center"
+        headerTitleStyle: {fontSize:22},
+        headerTitleAlign:"center",
+        headerTintColor: "green",
       }}
     >
       <Stack.Group  screenOptions={{ headerShown:false}}>

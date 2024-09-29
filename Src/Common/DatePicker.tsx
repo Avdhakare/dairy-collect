@@ -24,7 +24,7 @@ const DatePicker:React.FC<datePicker> = ({item,getDateformPicker}) => {
 
   return (
     <View>
-      <TouchableOpacity onPress={()=>setShow(true)} className='w-full text-base mt-4 px-4 py-2 border-2  border-green-300 rounded-lg bg-white'  >
+      <TouchableOpacity onPress={()=>setShow(true)} className='w-full text-base mt-4 px-4 py-2 border border-green-400 rounded-lg bg-white'  >
         <Text>{epochToDateString(date) as string}</Text>
       </TouchableOpacity>
       {show && (

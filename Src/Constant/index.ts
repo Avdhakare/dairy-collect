@@ -47,7 +47,6 @@ export interface dateFormet{
  export interface buttonGroup{
     dateSelect:dateFormet
     setDateSelect:(data:dateFormet)=>void,
-    width:number
 }
 export interface datePicker{
     item:EpochTimeStamp,

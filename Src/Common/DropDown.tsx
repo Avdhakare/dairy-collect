@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { DropDownEnum } from "../Constant";
 
 const DropDown=({value,onChange,onBlur,options,placeholder,enabled=false}:DropDownEnum)=>(
-    <View  className="border-2 my-2 bg-white border-green-300 rounded-lg h-12" >
+    <View  className="border my-2 bg-white border-green-400 rounded-lg h-12" >
         <Picker
             selectedValue={value}
             className="w-full px-2 "

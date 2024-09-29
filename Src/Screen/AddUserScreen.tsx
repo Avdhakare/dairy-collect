@@ -32,49 +32,49 @@ const AddUserScreen=({navigation,route}:any)=>{
       // setAddUser(false);
     };
 
-    useEffect(()=> navigation.setOptions({  title:"Add User"  }),[navigation])
     return (
-        <View>
-             {cameraVisible ? (
-        <CameraOpen setCameraVisible={setCameraVisible} setPicture={(e: any)=>setData({...data,image:e})}/>
-      ) :(
-      <View className="bg-cyan-50 rounded-md py-4">
-        <View className=" h-full flex-col justify-between">
-          <View className=" py-2 px-3 h-[335]">
-            <View className="border-2 border-green-300 w-[100] h-[100] relative flex flex-row mx-auto items-center rounded-full">
-              {data.image ? (
-                <Image source={{ uri: data.image }} className=' w-24 h-24' />
-              ) : (
-                <Image
-                  source={{ uri: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" }}
-                  className=' w-24 h-24'
+      <View>
+        {cameraVisible ? (
+          <CameraOpen setCameraVisible={setCameraVisible} setPicture={(e: any)=>setData({...data,image:e})}/>
+        ) :(
+          <View className="bg-cyan-50 rounded-md py-4">
+            <View className=" h-full flex-col justify-between">
+              <View className=" py-2 px-3 h-[335]">
+                <View className="border-2 border-green-300 w-[100] h-[100] relative flex flex-row mx-auto items-center rounded-full">
+                  {data.image ? (
+                    <Image source={{ uri: data.image }} className=' w-24 h-24' />
+                  ) : (
+                    <Image
+                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" }}
+                      className=' w-24 h-24'
+                    />
+                  )}
+                  <TouchableOpacity onPress={() => setCameraVisible(true)} className=" absolute right-0 bottom-0" >
+                    <FontAwesome name="plus-circle" size={30} color="black" />
+                  </TouchableOpacity>
+                </View>
+                <Text className="mt-4 text-green-800 text-base text-center font-bold">Name</Text>
+                <Input
+                  placeholder="Please Enter Name"
+                  value={data.name}
+                  onChange={(e) => setData({ ...data, name: e })}
                 />
-              )}
-              <TouchableOpacity onPress={() => setCameraVisible(true)} className=" absolute right-0 bottom-0" >
-                <FontAwesome name="plus-circle" size={30} color="black" />
-              </TouchableOpacity>
+                <Text className=" text-green-800 mt-4 text-center text-base font-bold">Mobile Number</Text>
+                <Input
+                  placeholder="Please Enter Mobile Number"
+                  value={data.mobileNumber}
+                  type="phone-pad"
+                  maxLength={10}
+                  onChange={(e) => setData({ ...data, mobileNumber: e })}
+                />
+              </View>
+              <View className="pb-3 " >
+              <Button onPress={handleSubmit}/>
+              </View>
             </View>
-            <Text className="mt-4 text-green-800 text-base text-center font-bold">Name</Text>
-            <Input
-              placeholder="Please Enter Name"
-              value={data.name}
-              onChange={(e) => setData({ ...data, name: e })}
-            />
-            <Text className=" text-green-800 mt-4 text-center text-base font-bold">Mobile Number</Text>
-            <Input
-              placeholder="Please Enter Mobile Number"
-              value={data.mobileNumber}
-              type="phone-pad"
-              maxLength={10}
-              onChange={(e) => setData({ ...data, mobileNumber: e })}
-            />
           </View>
-          <View className="pb-3 " >
-           <Button onPress={handleSubmit}/>
-          </View>
-        </View>
-      </View>)}
-        </View>
+        )}
+      </View>
     )
 }
 export default AddUserScreen;
