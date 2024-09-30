@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View,Text } from "react-native";
-import { slipData } from "../Constant";
+import { SCREEN, slipData } from "../Constant";
 import Button from "../Common/Button";
 import Input from "../Common/Input";
 import DropDown from "../Common/DropDown";
@@ -15,7 +15,7 @@ const  actualPrice={
 }
 
 
-const AddDetailsScreen=({navigation,route}:any)=>{
+const AddDetailsScreen=({navigation,route}:SCREEN)=>{
     const [data, setData] = useState<slipData>({}as slipData);
     const [error,setError]=useState<any>({FAT:false,SNF:false,AWM:false,quantity:false})
     const [disabledKey,setDisabledKey]=useState(['FAT',"SNF",'AWM','quantity'])

@@ -1,7 +1,8 @@
 import {View,Button,Image,Text,TextInput,TouchableOpacity,ScrollView} from "react-native";
 import { Routes } from "../Constant/Routes";
+import { SCREEN } from "../Constant";
   // import { ScrollView } from "react-native-reanimated";
-  const SignupScreen = ({navigation}:any) => {
+  const SignupScreen = ({navigation}:SCREEN) => {
     return (
       <ScrollView>
       <View className="bg-white h-[820] w-full">

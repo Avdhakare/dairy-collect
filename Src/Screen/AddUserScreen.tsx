@@ -2,36 +2,28 @@ import React, { useEffect, useState } from "react";
 import { View,Text, TouchableOpacity,Image} from "react-native";
 import { Routes } from "../Constant/Routes";
 import {AntDesign,FontAwesome} from '@expo/vector-icons';
-import { user } from "../Constant";
+import { profile, SCREEN, user } from "../Constant";
 import CameraOpen from "../Common/CameraOpen";
 import Input from "../Common/Input";
 import Button from "../Common/Button";
-
-
-const AddUserScreen=({navigation,route}:any)=>{
-    const [data,setData]=useState({} as user )
+import { useGlobalStore } from "../Hooks/useGlobalStore";
+const AddUserScreen=({navigation,route}:SCREEN)=>{
+    const [data,setData]=useState<profile>({} as profile )
     const [cameraVisible, setCameraVisible] = useState(false);
+    const store=useGlobalStore()
     const handleSubmit = async () => {
         data.endDate = new Date().getTime();
         data.startDate = new Date().getTime();
-        // onSubmit(data);
-        // setData({} as user)
-        navigation.goBack()
+        data.image= data.image?data.image :'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+        data.totalAmount= 0;
+        data.dueAmount=0;
+        if(data?.name && data?.mobileNumber){
+          store.userStore.addMember(data)
+          setData({} as profile)
+          navigation.goBack()
+        } 
+       
     };
-    const userCreate=(data:user) => {
-      let arr=[{
-        ...data,
-        id: 3,
-        // entries.length+1,
-        image: data.image!==null?data.image :'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-        totalAmount: 10000,
-        dueAmount:10,
-    }]
-    if(data?.name){} 
-      // setEntries((old: any)=>[...old,...arr])
-      // setAddUser(false);
-    };
-
     return (
       <View>
         {cameraVisible ? (

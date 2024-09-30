@@ -1,24 +1,19 @@
 import { Text, TouchableOpacity, View,Image, FlatList } from "react-native"
 import {AntDesign} from '@expo/vector-icons';   
 import React, { useEffect, useState } from "react";
-import { profile, slipData, user } from "../Constant";
+import { profile, SCREEN, slipData, user } from "../Constant";
 import { Routes } from "../Constant/Routes";
 import UserCard from "../Common/UserCard";
+import { useGlobalStore } from "../Hooks/useGlobalStore";
+import { useIsFocused } from "@react-navigation/native";
 
-const DashBoardScreen=({navigation}:any)=>{
-    const[entries,setEntries]=useState<profile[]>([
-        {
-          "dueAmount": 10, 
-          "endDate": 1708930893309, 
-          "id": "1", 
-          "mobileNumber": 8445667407, 
-          "name": "Avdhesh Dhakare", 
-          "image":`https://cdn-icons-png.flaticon.com/512/3135/3135715.png`, 
-          "startDate": 1708930893309, 
-          "totalAmount": 10000,
-          details:[]
-        }
-    ])
+const DashBoardScreen=({navigation}:SCREEN)=>{
+    const store= useGlobalStore();
+    const isFocus=useIsFocused();
+    const[entries,setEntries]=useState<profile[]>([] as profile[])
+    useEffect(()=>{
+        setEntries(store.userStore.users)
+    },[store.userStore.users,isFocus])
     
     useEffect(()=>{
         navigation.setOptions({
@@ -40,8 +35,9 @@ const DashBoardScreen=({navigation}:any)=>{
        <View>
         <FlatList<profile>
             data={entries}
-            renderItem={(item)=>(
+            renderItem={(item,)=>(
                 <UserCard 
+                    key={item.index}
                     {...item} 
                     ContainerClick={(item:profile)=>navigation.navigate(Routes.USER_DETAILS,{item})} 
                     onPress={(item:profile)=>navigation.navigate(Routes.ADD_DETAILS_MODAL,{item})} 

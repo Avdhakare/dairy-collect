@@ -5,9 +5,12 @@ import { Routes } from "../Constant/Routes";
 import DetailCard from "../Common/DetailCard";
 import ButtonGroups from "../Common/ButtonGroups";
 import AmountCard from "../Common/AmountCard";
+import { SCREEN } from "../Constant";
 
-const DetailsScreen=({navigation,route}:any)=>{
+const DetailsScreen=({navigation,route}:SCREEN)=>{
     const [dateSelect ,setDateSelect]=useState({startDate:new Date().getTime(),endDate:new Date().getTime()})
+    const [showDetailCard, setShowDetailCard] = useState(true);
+
     useEffect(()=>{
      navigation.setOptions({  
         title:route.params?.item?.name ,
@@ -22,15 +25,11 @@ const DetailsScreen=({navigation,route}:any)=>{
         endDate: route.params?.item?.endDate?route.params?.item?.endDate:new Date().getTime()
      })
 },[route,navigation])
-const [showDetailCard, setShowDetailCard] = useState(true); // State to control visibility of DetailCard
-
   const handleScroll = (event: { nativeEvent: { contentOffset: { y: any; }; }; }) => {
     const scrollOffsetY = event.nativeEvent.contentOffset.y;
-    if (scrollOffsetY > 50) {
-      setShowDetailCard(false); // Hide DetailCard when scrolled more than 50px
-    } else {
-      setShowDetailCard(true); // Show DetailCard when scrolled back up
-    }
+    if (scrollOffsetY > 50) setShowDetailCard(false);
+    else setShowDetailCard(true); 
+    
   };
 
     return(  

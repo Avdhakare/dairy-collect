@@ -9,7 +9,8 @@ import {
 } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Routes } from "../Constant/Routes";
-const LoginScreen = ({navigation}:any) => {
+import { SCREEN } from "../Constant";
+const LoginScreen = ({navigation}:SCREEN) => {
   
   return (
     <ScrollView>

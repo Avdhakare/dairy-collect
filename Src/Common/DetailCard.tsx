@@ -7,7 +7,7 @@ const DetailCard=({item,dateSelect,setDateSelect}:any)=>{
     function epochToDateString(epoch:any) {
         const date = new Date(parseInt(epoch));
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
+        const month = String(date.getMonth() + 1).padStart(2, '0'); 
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
     }
@@ -20,7 +20,7 @@ const DetailCard=({item,dateSelect,setDateSelect}:any)=>{
                         className="w-24 h-24 rounded-full mr-4"
                     />
                     <View className="flex-1 relative">
-                        <Text className="text-green-600 text-lg font-bold ">{item?.name}</Text>
+                        <Text className="text-green-600 text-lg font-bold capitalize ">{item?.name}</Text>
                         <Text className="text-sm font-bold mt-1">{item?.mobileNumber}</Text>
                     </View>
                 </View>

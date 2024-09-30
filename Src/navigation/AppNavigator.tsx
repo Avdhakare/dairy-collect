@@ -12,14 +12,16 @@ import { TouchableOpacity } from "react-native";
 
 const AppNavigator=()=>{
   const Stack = createNativeStackNavigator<any>();
-  const isSignIN=false;
+  const isSignIN=true;
 return(
   <NavigationContainer >
     <Stack.Navigator 
       initialRouteName={isSignIN ?Routes.DASHBOARD :Routes.LOGIN}
       screenOptions={{
         headerStyle: { backgroundColor: "#CAF4FF" }, 
-        headerTitleStyle: {fontSize:22},
+        headerTitleStyle: {
+          fontSize:22,
+        },
         headerTitleAlign:"center",
         headerTintColor: "green",
       }}

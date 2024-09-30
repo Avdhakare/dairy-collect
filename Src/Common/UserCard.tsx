@@ -18,7 +18,7 @@ const UserCard=({item,ContainerClick,onPress}:any)=>{
                         className="w-20 h-20 rounded-full mr-4"
                     />
                     <View className="flex-1 relative">
-                        <Text className="text-green-600 text-lg font-bold ">{item?.name}</Text>
+                        <Text className="text-green-600 text-lg font-bold capitalize ">{item?.name}</Text>
                         <Text className="text-sm font-bold mt-1">{item?.mobileNumber}</Text>
                         <Text className="text-sm font-bold mt-1 text-indigo-400 ">{item.totalAmount}</Text>
 

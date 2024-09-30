@@ -1,3 +1,4 @@
+import { Route } from "@react-navigation/native";
 import { GestureResponderEvent, KeyboardTypeOptions, NativeSyntheticEvent, TargetedEvent, TextInputFocusEventData } from "react-native";
 
 export interface addPopup {
@@ -23,10 +24,10 @@ export interface profile {
     image: string;
     totalAmount: number;
     dueAmount: number;
-    mobileNumber: number;
+    mobileNumber: string;
     startDate: EpochTimeStamp;
     endDate: EpochTimeStamp;
-    details:profile[]
+    details:slipData[]
 }
 export interface slipData{
     ID: string;
@@ -113,4 +114,16 @@ export interface BUTTON{
     title?:string | undefined,
     disabled?:boolean;
     onPress: ((event: GestureResponderEvent) => void) | undefined;
+}
+
+export type NotificationType = 'success' | 'error' | 'info' | 'warning';
+
+export interface INotificationData{
+  title?: string,
+  message: string,
+  type: NotificationType,
+}
+export interface SCREEN{
+    navigation?:any;
+    route?:any;
 }
