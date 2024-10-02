@@ -13,10 +13,8 @@ const UserCard=({item,ContainerClick,onPress}:any)=>{
         <TouchableOpacity onPress={()=>ContainerClick(item)} className="py-2">
             <View className=" bg-white p-4 rounded-2xl shadow-md my-2 mx-4">
                 <View className="flex-row items-center">
-                    <Image
-                        source={ require("../../assets/images/profile.png")}        
-                        className="w-20 h-20 rounded-full mr-4"
-                    />
+                    {item?.image ?(<Image source={{ uri: item.image }} className='w-20 h-20 rounded-full mr-4' />
+                    ):(<Image source={ require("../../assets/images/profile.png")} className="w-20 h-20 rounded-full mr-4" />)}
                     <View className="flex-1 relative">
                         <Text className="text-green-600 text-lg font-bold capitalize ">{item?.name}</Text>
                         <Text className="text-sm font-bold mt-1">{item?.mobileNumber}</Text>

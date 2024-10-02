@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, TouchableOpacity,Text, View } from "react-native";
-import { buttonGroup } from "../Constant";
+import { buttonGroup, BUTTONGROUPSENUM } from "../Constant";
 
-const  item=['All','year' ,'month', 'week']
+const  item=[BUTTONGROUPSENUM.ALL,BUTTONGROUPSENUM.YEAR ,BUTTONGROUPSENUM.MONTH, BUTTONGROUPSENUM.WEEK]
 
 const ButtonGroups=({dateSelect,setDateSelect}:buttonGroup)=>{
     const [selectedIndex, setSelectedIndex] =useState(0);
@@ -10,7 +10,7 @@ const ButtonGroups=({dateSelect,setDateSelect}:buttonGroup)=>{
         const days = (dateSelect.endDate - dateSelect.startDate) / (24 * 60 * 60 * 1000)
        if(days<8)setSelectedIndex(3)
        else if(days<32) setSelectedIndex(2)
-       else if(days<366)setSelectedIndex(1)
+       else if(days<367)setSelectedIndex(1)
        else setSelectedIndex(0)
      
     },[dateSelect.startDate,dateSelect.endDate])
@@ -19,19 +19,19 @@ const ButtonGroups=({dateSelect,setDateSelect}:buttonGroup)=>{
         let date= new Date(dateSelect.endDate)
         eventDate.endDate=dateSelect.endDate
         switch(item[event]){
-            case 'All':{
+            case BUTTONGROUPSENUM.ALL:{
                 eventDate.endDate=date.getTime()
                 break;
             }
-            case'year':{
+            case BUTTONGROUPSENUM.YEAR:{
                 eventDate.startDate=new Date(date.getFullYear()-1,date.getMonth(),date.getDate()).getTime()
                 break;
             }
-           case'month':{
+           case BUTTONGROUPSENUM.MONTH:{
                 eventDate.startDate=new Date(date.getFullYear(),date.getMonth()-1,date.getDate()).getTime()
                 break;
             }
-            case 'week':{
+            case BUTTONGROUPSENUM.WEEK:{
                 eventDate.startDate=new Date(date.getFullYear(),date.getMonth(),date.getDate()-7).getTime()
                 break;
             }

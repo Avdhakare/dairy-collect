@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {AntDesign} from '@expo/vector-icons';
-import { View,Text, TouchableOpacity, FlatList } from "react-native";
+import { View,TouchableOpacity, FlatList } from "react-native";
 import { Routes } from "../Constant/Routes";
 import DetailCard from "../Common/DetailCard";
 import ButtonGroups from "../Common/ButtonGroups";
@@ -29,24 +29,25 @@ const DetailsScreen=({navigation,route}:SCREEN)=>{
     const scrollOffsetY = event.nativeEvent.contentOffset.y;
     if (scrollOffsetY > 50) setShowDetailCard(false);
     else setShowDetailCard(true); 
-    
   };
 
-    return(  
-        <FlatList
-            data={[1,2,3,4,5,6,7,8,9]}
-            renderItem={({item})=>(<AmountCard/>)}
-            scrollEnabled={true}
-            stickyHeaderIndices={[0]}
-            onScroll={handleScroll} 
-            scrollEventThrottle={16} 
-            ListHeaderComponent={
-                <View className="mx-2 bg-gray-50">
-                    <DetailCard item={route.params?.item} dateSelect={dateSelect}setDateSelect={setDateSelect}/>
-                    <ButtonGroups dateSelect={dateSelect} setDateSelect={setDateSelect}/>
-                </View>
-            }
-        />
+    return( 
+        <View className="mx-2">
+            {showDetailCard &&(<DetailCard item={route.params?.item} dateSelect={dateSelect}setDateSelect={setDateSelect}/>)}
+            <FlatList
+                data={[1,2,3,4,5,6,7,8,9]}
+                renderItem={({item})=>(<AmountCard />)}
+                scrollEnabled={true}
+                stickyHeaderIndices={[0]}
+                onScroll={handleScroll} 
+                scrollEventThrottle={16} 
+                ListHeaderComponent={
+                    <View className="bg-gray-50 shadow-lg">
+                        <ButtonGroups dateSelect={dateSelect} setDateSelect={setDateSelect}/>
+                    </View>
+                }
+            />
+        </View>
     )
 }
 export default DetailsScreen;

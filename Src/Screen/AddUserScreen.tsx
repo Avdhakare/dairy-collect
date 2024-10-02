@@ -15,7 +15,7 @@ const AddUserScreen=({navigation,route}:SCREEN)=>{
         data.endDate = new Date().getTime();
         data.startDate = new Date().getTime();
         data.image= data.image?data.image :'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-        data.totalAmount= 0;
+        data.totalAmount= 10;
         data.dueAmount=0;
         if(data?.name && data?.mobileNumber){
           store.userStore.addMember(data)
@@ -32,17 +32,17 @@ const AddUserScreen=({navigation,route}:SCREEN)=>{
           <View className="bg-cyan-50 rounded-md py-4">
             <View className=" h-full flex-col justify-between">
               <View className=" py-2 px-3 h-[335]">
-                <View className="border-2 border-green-300 w-[100] h-[100] relative flex flex-row mx-auto items-center rounded-full">
+                <View className="border-2 border-green-300 w-[300] h-[300] relative flex flex-row mx-auto items-center rounded-full">
                   {data.image ? (
-                    <Image source={{ uri: data.image }} className=' w-24 h-24' />
+                    <Image source={{ uri: data.image }} className=' w-full h-full rounded-full' />
                   ) : (
                     <Image
                       source={{ uri: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" }}
-                      className=' w-24 h-24'
+                      className=' w-full h-full'
                     />
                   )}
-                  <TouchableOpacity onPress={() => setCameraVisible(true)} className=" absolute right-0 bottom-0" >
-                    <FontAwesome name="plus-circle" size={30} color="black" />
+                  <TouchableOpacity onPress={() => setCameraVisible(true)} className=" p-2 absolute left-[55%] top-[75%]" style={{transform:[{ translateX: -50 }]}} >
+                    <FontAwesome name="plus-circle" size={60} color="white" />
                   </TouchableOpacity>
                 </View>
                 <Text className="mt-4 text-green-800 text-base text-center font-bold">Name</Text>

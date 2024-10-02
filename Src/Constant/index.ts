@@ -1,5 +1,6 @@
 import { Route } from "@react-navigation/native";
 import { GestureResponderEvent, KeyboardTypeOptions, NativeSyntheticEvent, TargetedEvent, TextInputFocusEventData } from "react-native";
+import { Timestamp } from "react-native-reanimated/lib/typescript/reanimated2/commonTypes";
 
 export interface addPopup {
     isVisible: boolean;
@@ -7,6 +8,15 @@ export interface addPopup {
     onSubmit: (user: user) => void;
 }
   
+ export interface ADMIN{
+    id?:number;
+    name:string| undefined;
+    mobileNumber:string|undefined;
+    password:string| undefined;
+    confirmPassward:string| undefined;
+    date?:Timestamp|undefined;
+
+ }
 export interface user {
     name: string;
     startDate: number;
@@ -114,6 +124,7 @@ export interface BUTTON{
     title?:string | undefined,
     disabled?:boolean;
     onPress: ((event: GestureResponderEvent) => void) | undefined;
+    classNames?:string;
 }
 
 export type NotificationType = 'success' | 'error' | 'info' | 'warning';
@@ -126,4 +137,11 @@ export interface INotificationData{
 export interface SCREEN{
     navigation?:any;
     route?:any;
+}
+export enum BUTTONGROUPSENUM {
+    ALL="ALL",
+    YEAR="YEAR",
+    WEEK="WEEK",
+    MONTH="MONTH",
+
 }
