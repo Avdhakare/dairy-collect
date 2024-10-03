@@ -1,43 +1,35 @@
 import { Route } from "@react-navigation/native";
 import { GestureResponderEvent, KeyboardTypeOptions, NativeSyntheticEvent, TargetedEvent, TextInputFocusEventData } from "react-native";
 import { Timestamp } from "react-native-reanimated/lib/typescript/reanimated2/commonTypes";
-
-export interface addPopup {
-    isVisible: boolean;
-    onClose: () => void;
-    onSubmit: (user: user) => void;
-}
-  
- export interface ADMIN{
-    id?:number;
-    name:string| undefined;
-    mobileNumber:string|undefined;
+ export interface ADMIN extends user{
     password:string| undefined;
     confirmPassward:string| undefined;
-    date?:Timestamp|undefined;
+    email?:string|undefined;
+    address?:string|undefined;
+    city?:string|undefined;
+    pinCode?:string|undefined
 
- }
-export interface user {
-    name: string;
-    startDate: number;
-    endDate: number;
-    image: string;
-    mobileNumber: string;
 }
+export interface user{
+    id?:string|undefined;
+    name:string| undefined;
+    mobileNumber:string|undefined;
+    image?:string|undefined;
+    createTimestamp?:Timestamp|undefined;
+    updateTimestamp?:Timestamp|undefined;
+
+}
+
 export interface cameraOpen{
     setCameraVisible:(value:boolean)=>void;
     setPicture:(value:any)=>void
 } 
-export interface profile {
-    name: string;
-    id: string;
-    image: string;
+export interface PROFILE extends user {
+    adminID:string |undefined;
     totalAmount: number;
     dueAmount: number;
     mobileNumber: string;
-    startDate: EpochTimeStamp;
-    endDate: EpochTimeStamp;
-    details:slipData[]
+    details:any
 }
 export interface slipData{
     ID: string;
@@ -110,6 +102,7 @@ export  interface INPUT{
     type?:KeyboardTypeOptions;
     isSecure?:boolean;
     maxLength?:number;
+    readOnly?:boolean;
 }
 export interface DropDownEnum {
     value:number|string|undefined,

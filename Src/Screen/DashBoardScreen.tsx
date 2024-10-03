@@ -1,7 +1,7 @@
-import {TouchableOpacity, View,FlatList, BackHandler } from "react-native"
+import {TouchableOpacity, View,FlatList, BackHandler,Text } from "react-native"
 import {AntDesign,FontAwesome,FontAwesome5} from '@expo/vector-icons';
 import React, { useCallback, useEffect, useState } from "react";
-import { profile, SCREEN} from "../Constant";
+import { PROFILE, SCREEN} from "../Constant";
 import { Routes } from "../Constant/Routes";
 import UserCard from "../Common/UserCard";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
@@ -12,28 +12,21 @@ const DashBoardScreen=({navigation}:SCREEN)=>{
     const store= useGlobalStore();
     const [isProfile,setIsProfile]=useState(false)
     const isFocus=useIsFocused();
-    const[entries,setEntries]=useState<profile[]>([] as profile[])
+    const[entries,setEntries]=useState<PROFILE[]>([] as PROFILE[])
     useEffect(()=>{
-        setEntries(store.userStore.users)
-    },[store.userStore.users,isFocus])
+        setEntries(()=>store.memberStore.member.filter((member:PROFILE)=>(member?.adminID===store.authenticationStore.admin?.id)))
+    },[store.memberStore.member,isFocus])
     useEffect(()=>{
         navigation.setOptions({
             headerRight: () => (<View className="flex-row justify-between">
-                <TouchableOpacity className="px-3 py-3" onPress={()=> navigation.navigate(Routes.ADD_USER_MODAL)}>
-                    <FontAwesome name="rupee" size={30} color="green" />
-                </TouchableOpacity>
-                <TouchableOpacity className="px-3 py-3" onPress={()=>setIsProfile(!isProfile)
-                    // navigation.navigate(Routes.ADD_USER_MODAL)
-                }>
-                    {/* <AntDesign name="adduser" size={30} color="green"/> */}
+                <TouchableOpacity className="px-3 py-3" onPress={()=>setIsProfile(!isProfile)}>
                     {isProfile?(<FontAwesome name="user-circle" size={29} color="green" />):(<FontAwesome5 name="user-circle" size={30} color="green" />)}
                 </TouchableOpacity> 
             </View>),
-            title:'',
-            headerLeft:()=>null,
          })
 
     },[navigation,isProfile])
+    console.log("store.memberStore.member",store.memberStore.member)
     useFocusEffect(
         useCallback(() => {
           const onBackPress = () =>{
@@ -46,19 +39,24 @@ const DashBoardScreen=({navigation}:SCREEN)=>{
     );
 
     return(
-        <View>
-            <ProfileModal setIsProfile={setIsProfile} isProfile={isProfile} />
-            <FlatList<profile>
+        <View className="">
+            <ProfileModal setIsProfile={setIsProfile} isProfile={isProfile} navigation={navigation}/>
+            <FlatList<any>
                 data={entries}
-                renderItem={(item,)=>(
+                renderItem={(item)=>(
                     <UserCard 
                         key={item.index}
                         {...item} 
-                        ContainerClick={(item:profile)=>navigation.navigate(Routes.USER_DETAILS,{item})} 
-                        onPress={(item:profile)=>navigation.navigate(Routes.ADD_DETAILS_MODAL,{item})} 
+                        ContainerClick={(item:PROFILE)=>navigation.navigate(Routes.USER_DETAILS,{id:item.id,adminID:item.adminID})} 
+                        onPress={(item:PROFILE)=>navigation.navigate(Routes.ADD_DETAILS,{id:item.id})} 
                     />
                 )}
                 keyExtractor={(item) => item.id}
+                ListEmptyComponent={
+                    <View className="h-20 flex-col justify-center m-5 shadow-lg rounded-lg bg-white ">
+                        <Text className="text-center text-lg text-slate-400 ">No Member Available</Text>
+                    </View>
+                }
             />  
         </View>      
     )

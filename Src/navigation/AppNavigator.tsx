@@ -4,11 +4,12 @@ import { Routes } from "../Constant/Routes";
 import LoginScreen from "../Screen/LoginScreen";
 import SignupScreen from "../Screen/SignupScreen";
 import DashBoardScreen from "../Screen/DashBoardScreen";
-import AddUserScreen from "../Screen/AddUserScreen";
-import AddDetailsScreen from "../Screen/AddDetailsScreen";
+import EditMemberScreen from "../Screen/EditMemberScreen";
+import EditDetailsScreen from "../Screen/EditDetailsScreen";
 import DetailsScreen from "../Screen/DetailsScreen";   
 import { observer } from "mobx-react";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
+import UpdateUserScreen from "../Screen/UpdateUserScreen";
 
 
 const AppNavigator=()=>{
@@ -30,10 +31,11 @@ return(
         <Stack.Screen name={Routes.SIGNUP} component={SignupScreen} />
       </Stack.Group>
       <Stack.Group screenOptions={{presentation:"modal"}}>
-        <Stack.Screen name={Routes.ADD_USER_MODAL} component={AddUserScreen}  options={{title:"Add User"}} />
-        <Stack.Screen name={Routes.ADD_DETAILS_MODAL} component={AddDetailsScreen}  options={{title:"Add Information"}} />
+        <Stack.Screen name={Routes.ADD_MEMBER} component={EditMemberScreen}  options={{title:"Add Member"}} />
+        <Stack.Screen name={Routes.EDIT_USER} component={UpdateUserScreen}  options={{title:"Update User Details"}} />
+        <Stack.Screen name={Routes.ADD_DETAILS} component={EditDetailsScreen}  options={{title:"Add Information"}} />
       </Stack.Group>
-      <Stack.Screen name={Routes.DASHBOARD} component={DashBoardScreen}/>
+      <Stack.Screen name={Routes.DASHBOARD} component={DashBoardScreen} options={{ title:'',headerLeft:()=>''}}/>
       <Stack.Screen name={Routes.USER_DETAILS} component={DetailsScreen} options={{title:"User Details"}} />
     </Stack.Navigator>
 </NavigationContainer>

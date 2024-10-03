@@ -1,12 +1,13 @@
 import { TextInput } from "react-native";
 import { INPUT } from "../Constant";
 
-const Input=({onChange,onBlur,value,placeholder,maxLength,type="default",isSecure=false}:INPUT)=>(
+const Input=({onChange,onBlur,value,placeholder,maxLength,type="default",isSecure=false,readOnly=false}:INPUT)=>(
     <TextInput
         placeholder={placeholder}
         value={value}
         keyboardType={type}
         onBlur={onBlur}
+        readOnly={readOnly}
         secureTextEntry={isSecure}
         onChangeText={onChange}
         maxLength={maxLength}

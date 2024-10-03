@@ -25,11 +25,11 @@ const UserCard=({item,ContainerClick,onPress}:any)=>{
                 <View className="fle-1 flex-row justify-between items-center mt-2 ">
                     <View className="">
                         <Text className="text-blue-500 text-left text-base font-bold">Start Date</Text>
-                        <Text className="text-gray-500 text-left text-sm mt-1">{epochToDateString(item.startDate)}</Text>
+                        <Text className="text-gray-500 text-left text-sm mt-1">{epochToDateString(item.createTimestamp)}</Text>
                     </View>
                     <View>
                         <Text className="text-blue-500 text-base font-bold text-right" >End Date</Text>
-                        <Text className="text-gray-500 text-sm mt-1 text-right">{epochToDateString(item.endDate)}</Text>
+                        <Text className="text-gray-500 text-sm mt-1 text-right">{epochToDateString(item.updateTimestamp)}</Text>
                     </View>
                 </View> 
                <TouchableOpacity onPress={()=>onPress(item)} className=" absolute top-2 right-3">

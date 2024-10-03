@@ -5,6 +5,7 @@ import Button from "../Common/Button";
 import Input from "../Common/Input";
 import DropDown from "../Common/DropDown";
 import DatePicker from "../Common/DatePicker";
+import { useGlobalStore } from "../Hooks/useGlobalStore";
 
 
 
@@ -15,11 +16,12 @@ const  actualPrice={
 }
 
 
-const AddDetailsScreen=({navigation,route}:SCREEN)=>{
+const EditDetailsScreen=({navigation,route}:SCREEN)=>{
     const [data, setData] = useState<slipData>({}as slipData);
     const [error,setError]=useState<any>({FAT:false,SNF:false,AWM:false,quantity:false})
     const [disabledKey,setDisabledKey]=useState(['FAT',"SNF",'AWM','quantity'])
     const options = ['AM','PM'];
+    const store=useGlobalStore();
     useEffect(()=>{
         let date=new Date().getTime()
         let type=new Date().getHours() >= 12 ? 'PM' : 'Am';
@@ -28,8 +30,9 @@ const AddDetailsScreen=({navigation,route}:SCREEN)=>{
     const rateCalculate=(fat: number,snf: number)=>(((actualPrice.actualRate*52*fat)/actualPrice.FATRate)+((actualPrice.actualRate*48*snf)/actualPrice.SNFRate));
     const onsubmit=()=>{
         data.totalAmount=(data.quantity*data.rate)
-        data.type=new Date().getHours() >= 12 ? 'PM' : 'AM'; 
-        // onSubmit(data)
+        data.type=data.type?data.type:new Date().getHours() >= 12 ? 'PM' : 'AM'; 
+        store.memberStore.addDetails(route.params?.id,data)
+        
         navigation.goBack();
     }
     const updateData=(key: string,value:any )=>{
@@ -130,4 +133,4 @@ const AddDetailsScreen=({navigation,route}:SCREEN)=>{
     )
 
 }
-export default AddDetailsScreen;
+export default EditDetailsScreen;

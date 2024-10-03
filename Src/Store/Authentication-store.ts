@@ -15,7 +15,10 @@ export class  AuthenticationStore extends BaseStore {
             signIN:observable,
             admin:observable,
             createAdministrator:action.bound,
-            signInAdministrator:action.bound
+            signInAdministrator:action.bound,
+            updateProfileImage:action.bound,
+            updateProfile:action.bound,
+            logout:action.bound,
 
         })
         void makePersistable(this,{
@@ -29,8 +32,8 @@ export class  AuthenticationStore extends BaseStore {
         })
     }
     createAdministrator=(admin:ADMIN)=>{
-        admin.id=this.administrator.length+1
-        admin.date=new Date().getTime()
+        admin.id=String(new Date().getTime())+','+ String(admin.mobileNumber)
+        admin.createTimestamp=new Date().getTime()
         try{
             if(this.administrator.find((item:ADMIN)=>Number(item.mobileNumber)===Number(admin.mobileNumber))){}
             else{     
@@ -57,5 +60,35 @@ export class  AuthenticationStore extends BaseStore {
             }
         }
     }
+    updateProfileImage=(key:string,value:string)=>{
+        const data:any=this.admin;
+        data[key]=value;
+        data.updateTimestamp=new Date().getTime();
+        runInAction(()=>{
+            this.admin=data;
+            this.administrator=this.administrator.map((item:ADMIN)=>{
+                if(Number(item.mobileNumber)===Number(this.admin.mobileNumber)) return {...this.admin}
+                else return item
+            })
+        })
+    }
+    updateProfile=(data:ADMIN)=>{
+        data.updateTimestamp=new Date().getTime();
+        runInAction(()=>{
+            this.admin=data;
+            this.administrator=this.administrator.map((item:ADMIN)=>{
+                if(Number(item.mobileNumber)===Number(data.mobileNumber)) return {...data}
+                else return item
+            })
+        })
+        return true;
+    }
+    logout=()=>{
+        runInAction(()=>{
+            this.signIN=false;
+            this.admin={} as ADMIN;
+        })
+    }
+
 
 }

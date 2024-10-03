@@ -1,6 +1,6 @@
 import { AuthenticationStore } from "./Authentication-store";
 import { NotificationStore } from "./notification-store";
-import { userStore } from "./user-store";
+import { memberStore } from "./member-store";
 
 export class RootStore {
     
@@ -10,12 +10,12 @@ export class RootStore {
             stores: this,
           };
         this.notificationStore = new NotificationStore(storeArgs);
-        this.userStore=new userStore(storeArgs)
+        this.memberStore=new memberStore(storeArgs)
         this.authenticationStore=new AuthenticationStore(storeArgs)
 
     }
 
-    userStore:userStore
+    memberStore:memberStore
     notificationStore: NotificationStore;
     authenticationStore:AuthenticationStore
 
