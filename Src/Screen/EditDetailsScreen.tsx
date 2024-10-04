@@ -6,6 +6,7 @@ import Input from "../Common/Input";
 import DropDown from "../Common/DropDown";
 import DatePicker from "../Common/DatePicker";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
+import { Routes } from "../Constant/Routes";
 
 
 
@@ -33,7 +34,7 @@ const EditDetailsScreen=({navigation,route}:SCREEN)=>{
         data.type=data.type?data.type:new Date().getHours() >= 12 ? 'PM' : 'AM'; 
         store.memberStore.addDetails(route.params?.id,data)
         
-        navigation.goBack();
+        navigation.navigate(Routes.USER_DETAILS,{id:route.params?.id,adminID:route.params?.adminID});
     }
     const updateData=(key: string,value:any )=>{
         let rate=data.rate

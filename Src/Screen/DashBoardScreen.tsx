@@ -26,7 +26,6 @@ const DashBoardScreen=({navigation}:SCREEN)=>{
          })
 
     },[navigation,isProfile])
-    console.log("store.memberStore.member",store.memberStore.member)
     useFocusEffect(
         useCallback(() => {
           const onBackPress = () =>{

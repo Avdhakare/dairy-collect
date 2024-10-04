@@ -32,26 +32,27 @@ export class memberStore  extends BaseStore{
     addDetails=(id:string,data:slipData)=>{
         let member:any= this.member.find((item:PROFILE)=>(item.id===id))
         const date= this.epochToDateString(data.date)
+        const IDString= this.epochToDateString(data.date,"ID")
         let status=true;
         if(!member){
             this.notifyError("Member Does not Exist");
             return
         }
         if(member?.details.length!==0){
-           const slip= member?.details.find((item:any)=>(item.date===date))
+           const slip= member?.details.find((item:any)=>(item.id===IDString))
            if(slip){
+            console.log("Asdfgh",slip)
                 status=false
                 slip.data.push(data)
                 member.details=member?.details?.map((item:any)=>{
-                    if(item.date===date){
-                        return{...slip}
-                    }else item
+                    if(item.id===IDString) return{...slip}
+                    else return item
                 })
                 member.totalAmount=Number(member.totalAmount)+Number(data.totalAmount)
             }
         }
         if(status){
-            member.details.push({date:date,data:[{...data}]})
+            member.details.push({id:IDString,date:date,data:[{...data}]})
             member.totalAmount=Number(member.totalAmount)+Number(data.totalAmount)
         }
         member.updateTimestamp=new Date().getTime();
@@ -62,14 +63,17 @@ export class memberStore  extends BaseStore{
             })
         })       
     }
-    epochToDateString(epoch:any) {
+    epochToDateString(epoch:any,key?:string) {
         const date = new Date(parseInt(epoch));
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth()).padStart(2, '0');
         const monthDup = String(date.getMonth()+1).padStart(2, '0');
         const year:any = date.getFullYear();
+        if(key==="ID") return `${day}`+`${monthDup}`+`${year}`;
         return `${day}/${monthDup}/${year}`;
-      }
+    }
+    
+
 
 }
 
