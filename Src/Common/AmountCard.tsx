@@ -1,7 +1,7 @@
 
+import { observer } from "mobx-react";
 import {Text, TouchableOpacity, View } from "react-native"
 const  AmountCard=({item}:any)=>{
-    console.log("Avdhesh",item)
     return(
         <View className="bg-white shadow-md p-2 rounded-lg border border-green-400 m-2">
             <Text className="text-blue-500 font-bold text-base">Date : {item?.date}</Text>
@@ -38,4 +38,4 @@ const  AmountCard=({item}:any)=>{
         </View>
     )
 }
-export default AmountCard;
+export default observer(AmountCard);

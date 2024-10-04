@@ -27,7 +27,6 @@ export class  AuthenticationStore extends BaseStore {
             properties: ["administrator","admin"]
         }).then((data)=>{
             console.log("store is persisted")
-            // this.admin={} as ADMIN
             this.signInAdministrator(this.admin.mobileNumber,this.admin.password)
         })
     }

@@ -41,7 +41,6 @@ export class memberStore  extends BaseStore{
         if(member?.details.length!==0){
            const slip= member?.details.find((item:any)=>(item.id===IDString))
            if(slip){
-            console.log("Asdfgh",slip)
                 status=false
                 slip.data.push(data)
                 member.details=member?.details?.map((item:any)=>{
