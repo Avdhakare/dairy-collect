@@ -2,12 +2,13 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 import { BaseStore, StoreConstructorArgs } from "./base-store";
 import { makePersistable } from "mobx-persist-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ADMIN } from "../Constant";
+import { ADMIN, PRICE } from "../Constant";
 
 export class  AuthenticationStore extends BaseStore {
     administrator:ADMIN[]=[]
     signIN=false;
-    admin:ADMIN={} as ADMIN
+    admin:ADMIN={} as ADMIN;
+    price:PRICE={}as PRICE;
     constructor(args:StoreConstructorArgs){
         super(args);
         makeObservable(this,{
@@ -55,6 +56,7 @@ export class  AuthenticationStore extends BaseStore {
                 runInAction(()=>{
                     this.admin=user;
                     this.signIN=true; 
+                    this.price=user.price;
                 })
             }
         }
@@ -74,7 +76,7 @@ export class  AuthenticationStore extends BaseStore {
     updateProfile=(data:ADMIN)=>{
         data.updateTimestamp=new Date().getTime();
         runInAction(()=>{
-            this.admin=data;
+            this.admin={...data};
             this.administrator=this.administrator.map((item:ADMIN)=>{
                 if(Number(item.mobileNumber)===Number(data.mobileNumber)) return {...data}
                 else return item
@@ -86,7 +88,22 @@ export class  AuthenticationStore extends BaseStore {
         runInAction(()=>{
             this.signIN=false;
             this.admin={} as ADMIN;
+            this.price={} as PRICE;
         })
+    }
+    updatePrice=(prices:PRICE)=>{
+        const data:ADMIN=this.admin;
+        this.price=prices
+        data.price=prices;
+        data.updateTimestamp=new Date().getTime();
+        runInAction(()=>{
+            this.admin=data;
+            this.administrator=this.administrator.map((item:ADMIN)=>{
+                if(Number(item.mobileNumber)===Number(this.admin.mobileNumber)) return {...this.admin}
+                else return item
+            })
+        })
+
     }
 
 

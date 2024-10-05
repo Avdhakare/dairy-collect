@@ -8,6 +8,7 @@ export  const Routes={
     ADD_MEMBER:"ADD_MEMBER",
     EDIT_USER:"EDIT_USER",
     ADD_DETAILS:"ADD_DETAILS",
+    PRICE:"PRICE",
 
     USER_DETAILS:"USER_DETAILS",
 

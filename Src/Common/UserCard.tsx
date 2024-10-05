@@ -1,7 +1,7 @@
 import { TouchableOpacity, View,Text,Image } from "react-native";
 import React from "react";
 import AntDesign from '@expo/vector-icons/AntDesign';
-const UserCard=({item,ContainerClick,onPress}:any)=>{
+const UserCard=({item,ContainerClick,onPress,disabled}:any)=>{
     function epochToDateString(epoch:any) {
         const date = new Date(parseInt(epoch));
         const day = String(date.getDate()).padStart(2, '0');
@@ -10,7 +10,7 @@ const UserCard=({item,ContainerClick,onPress}:any)=>{
         return `${day}/${month}/${year}`;
     }
     return(
-        <TouchableOpacity onPress={()=>ContainerClick(item)} className="py-2">
+        <TouchableOpacity disabled={disabled} onPress={()=>ContainerClick(item)} className="py-2">
             <View className=" bg-white p-4 rounded-2xl shadow-md my-2 mx-4">
                 <View className="flex-row items-center">
                     {item?.image ?(<Image source={{ uri: item.image }} className='w-20 h-20 rounded-full mr-4' />
@@ -32,7 +32,7 @@ const UserCard=({item,ContainerClick,onPress}:any)=>{
                         <Text className="text-gray-500 text-sm mt-1 text-right">{epochToDateString(item.updateTimestamp)}</Text>
                     </View>
                 </View> 
-               <TouchableOpacity onPress={()=>onPress(item)} className=" absolute top-2 right-3">
+               <TouchableOpacity disabled={disabled} onPress={()=>onPress(item)} className=" absolute top-2 right-3">
                     <AntDesign name={"pluscircleo"} size={24} color="green" />
                 </TouchableOpacity>
             </View>

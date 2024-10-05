@@ -14,18 +14,16 @@ const DashBoardScreen=({navigation}:SCREEN)=>{
     const isFocus=useIsFocused();
     const[entries,setEntries]=useState<PROFILE[]>([] as PROFILE[])
     useEffect(()=>{
-        setEntries(()=>store.memberStore.member.filter((member:PROFILE)=>(member?.adminID===store.authenticationStore.admin?.id)))
-    },[store.memberStore.member,isFocus])
-    useEffect(()=>{
         navigation.setOptions({
             headerRight: () => (<View className="flex-row justify-between">
                 <TouchableOpacity className="px-3 py-3" onPress={()=>setIsProfile(!isProfile)}>
                     {isProfile?(<FontAwesome name="user-circle" size={29} color="green" />):(<FontAwesome5 name="user-circle" size={30} color="green" />)}
                 </TouchableOpacity> 
             </View>),
-         })
+        })
+        setEntries(()=>store.memberStore.members.filter((member:PROFILE)=>(member?.adminID===store.authenticationStore.admin?.id)))
 
-    },[navigation,isProfile])
+    },[isProfile,store.memberStore.members,isFocus])
     useFocusEffect(
         useCallback(() => {
           const onBackPress = () =>{
@@ -36,17 +34,20 @@ const DashBoardScreen=({navigation}:SCREEN)=>{
           return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
         }, [])
     );
-
     return(
-        <View className="">
+        <View>
             <ProfileModal setIsProfile={setIsProfile} isProfile={isProfile} navigation={navigation}/>
             <FlatList<any>
                 data={entries}
                 renderItem={(item)=>(
                     <UserCard 
                         key={item.index}
+                        disabled={!store.authenticationStore.admin.price}
                         {...item} 
-                        ContainerClick={(item:PROFILE)=>navigation.navigate(Routes.USER_DETAILS,{id:item.id,adminID:item.adminID})} 
+                        ContainerClick={(item:PROFILE)=>{
+                            store.memberStore.setMember(item.id,item.adminID)
+                            navigation.navigate(Routes.USER_DETAILS)
+                        }} 
                         onPress={(item:PROFILE)=>navigation.navigate(Routes.ADD_DETAILS,{id:item.id})} 
                     />
                 )}

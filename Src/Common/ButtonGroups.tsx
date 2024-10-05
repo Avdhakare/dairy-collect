@@ -7,32 +7,32 @@ const  item=[BUTTONGROUPSENUM.ALL,BUTTONGROUPSENUM.YEAR ,BUTTONGROUPSENUM.MONTH,
 const ButtonGroups=({dateSelect,setDateSelect}:buttonGroup)=>{
     const [selectedIndex, setSelectedIndex] =useState(0);
     useEffect(()=>{
-        const days = (dateSelect.endDate - dateSelect.startDate) / (24 * 60 * 60 * 1000)
+        const days = (dateSelect.updateTimestamp - dateSelect.createTimestamp) / (24 * 60 * 60 * 1000)
        if(days<8)setSelectedIndex(3)
        else if(days<32) setSelectedIndex(2)
        else if(days<367)setSelectedIndex(1)
        else setSelectedIndex(0)
      
-    },[dateSelect.startDate,dateSelect.endDate])
+    },[dateSelect.createTimestamp,dateSelect.updateTimestamp])
     const event=(event:EpochTimeStamp)=>{
-        let eventDate={startDate:0,endDate:0}
-        let date= new Date(dateSelect.endDate)
-        eventDate.endDate=dateSelect.endDate
+        let eventDate={createTimestamp:0,updateTimestamp:0}
+        let date= new Date(dateSelect.updateTimestamp)
+        eventDate.updateTimestamp=dateSelect.updateTimestamp
         switch(item[event]){
             case BUTTONGROUPSENUM.ALL:{
-                eventDate.endDate=date.getTime()
+                eventDate.updateTimestamp=date.getTime()
                 break;
             }
             case BUTTONGROUPSENUM.YEAR:{
-                eventDate.startDate=new Date(date.getFullYear()-1,date.getMonth(),date.getDate()).getTime()
+                eventDate.createTimestamp=new Date(date.getFullYear()-1,date.getMonth(),date.getDate()).getTime()
                 break;
             }
            case BUTTONGROUPSENUM.MONTH:{
-                eventDate.startDate=new Date(date.getFullYear(),date.getMonth()-1,date.getDate()).getTime()
+                eventDate.createTimestamp=new Date(date.getFullYear(),date.getMonth()-1,date.getDate()).getTime()
                 break;
             }
             case BUTTONGROUPSENUM.WEEK:{
-                eventDate.startDate=new Date(date.getFullYear(),date.getMonth(),date.getDate()-7).getTime()
+                eventDate.createTimestamp=new Date(date.getFullYear(),date.getMonth(),date.getDate()-7).getTime()
                 break;
             }
         }

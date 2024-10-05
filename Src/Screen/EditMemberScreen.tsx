@@ -18,7 +18,7 @@ const EditMemberScreen=({navigation,route}:SCREEN)=>{
         data.dueAmount=0;
         data.adminID=store.authenticationStore.admin.id
         if(data?.name && data?.mobileNumber){
-          store.memberStore.addMember(data)
+         await store.memberStore.addMember(data)
           setData({} as PROFILE)
           navigation.goBack()
         } 

@@ -6,61 +6,79 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PROFILE, slipData } from "../Constant";
 
 export class memberStore  extends BaseStore{
-    member:PROFILE[]=[]
+    members:PROFILE[]=[{} as PROFILE ] as PROFILE[];
+    member:PROFILE|any={} as PROFILE;
     
     constructor(args:StoreConstructorArgs){
         super(args);
         makeObservable(this, {
+            members:observable,
             member:observable,
             addMember:action.bound,
-            addDetails:action.bound
+            addDetails:action.bound,
+            epochToDateString:action.bound
         })
         void makePersistable(this, {
             storage: AsyncStorage,
             name: "member_store",
-            properties: ["member"]
+            properties: ["members"]
         });
     }
     addMember=(data:PROFILE)=>{
         data.id=String(new Date().getTime())+','+ String(data.mobileNumber)
         data.details=[]
-        if(this.member?.find((item:PROFILE)=>Number(item.mobileNumber)===Number(data?.mobileNumber))) return
+        if(this.members?.find((item:PROFILE)=>(Number(item.mobileNumber)===Number(data?.mobileNumber) && item.adminID===data.adminID))) return
         runInAction(()=>{
-            this.member.push(data)
+            this.members.push(data)
         })
     }
     addDetails=(id:string,data:slipData)=>{
-        let member:any= this.member.find((item:PROFILE)=>(item.id===id))
-        const date= this.epochToDateString(data.date)
+        let members:any= this.members.find((item:PROFILE)=>(item.id===id))
         const IDString= this.epochToDateString(data.date,"ID")
         let status=true;
-        if(!member){
+        if(!members){
             this.notifyError("Member Does not Exist");
             return
         }
-        if(member?.details.length!==0){
-           const slip= member?.details.find((item:any)=>(item.id===IDString))
+        if(members?.details.length!==0){
+           const slip= members?.details.find((item:any)=>(item.id===IDString))
            if(slip){
                 status=false
-                slip.data.push(data)
-                member.details=member?.details?.map((item:any)=>{
-                    if(item.id===IDString) return{...slip}
-                    else return item
+                let check=true;
+                let deleteAmount=0
+                slip.data=slip.data.map((item:slipData)=>{
+                    if(item.type===data.type) {
+                        deleteAmount=Number(item.totalAmount)
+                        check=false;
+                        return {...data}
+                    }else return item
                 })
-                member.totalAmount=Number(member.totalAmount)+Number(data.totalAmount)
+                if(check) slip.data.push(data)
+                members.details=members?.details?.map((item:any)=>{
+                    if(item.id===IDString) return{...slip};
+                    else return item;
+                })
+                members.totalAmount=Number(members.totalAmount)+Number(data.totalAmount)
+                members.totalAmount=members.totalAmount-deleteAmount
             }
         }
         if(status){
-            member.details.push({id:IDString,date:date,data:[{...data}]})
-            member.totalAmount=Number(member.totalAmount)+Number(data.totalAmount)
+            members.details.push({id:IDString,date:data.date,data:[{...data}]})
+            members.totalAmount=Number(members.totalAmount)+Number(data.totalAmount)
         }
-        member.updateTimestamp=new Date().getTime();
+        members.updateTimestamp=data.date>=members.updateTimestamp? data.date:members.updateTimestamp
+        members.details=members.details.sort((a:any, b:any) => a.date - b.date)
         runInAction(()=>{
-            this.member=this.member.map((item:PROFILE)=>{
-                if(item.id===id) return {...member}
+            this.members=this.members.map((item:PROFILE)=>{
+                if(item.id===id) return {...members}
                 else return item
             })
         })       
+    }
+    setMember=(id:string|undefined,adminID:string|undefined)=>{
+        runInAction(()=>{
+            this.member=this.members.find((item:PROFILE)=>(item.id===id && item.adminID===adminID))
+        })
     }
     epochToDateString(epoch:any,key?:string) {
         const date = new Date(parseInt(epoch));
@@ -71,8 +89,5 @@ export class memberStore  extends BaseStore{
         if(key==="ID") return `${day}`+`${monthDup}`+`${year}`;
         return `${day}/${monthDup}/${year}`;
     }
-    
-
-
 }
 
