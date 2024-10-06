@@ -9,38 +9,32 @@ import { useGlobalStore } from "../Hooks/useGlobalStore";
 import { Routes } from "../Constant/Routes";
 
 
-
-const  actualPrice={
-    SNFRate:20,
-    FATRate:20,
-    actualRate:20
-}
-
-
 const EditDetailsScreen=({navigation,route}:SCREEN)=>{
     const [data, setData] = useState<slipData>({}as slipData);
     const [error,setError]=useState<any>({FAT:false,SNF:false,AWM:false,quantity:false})
     const [disabledKey,setDisabledKey]=useState(['FAT',"SNF",'AWM','quantity'])
     const options = ['AM','PM'];
     const store=useGlobalStore();
+    const{ 
+        authenticationStore:{price}
+    }=store;
     useEffect(()=>{
         let date=new Date().getTime()
-        let type=new Date().getHours() >= 12 ? 'PM' : 'Am';
-        setData({...data,date,type,rate:rateCalculate(data.FAT,data.SNF)})  
+        let type=new Date().getHours() >= 12 ? 'PM' : 'AM';
+        setData({...data,date,type,price:priceCalculate(data.FAT,data.SNF)})  
     },[])
-    const rateCalculate=(fat: number,snf: number)=>(((actualPrice.actualRate*52*fat)/actualPrice.FATRate)+((actualPrice.actualRate*48*snf)/actualPrice.SNFRate));
+    const priceCalculate=(fat: number,snf: number)=>(((Number(price.actualPrice)*Number(price.fatQuantity)*fat)/Number(price.FATPrice))+((Number(price.actualPrice)*Number(price.snfQuantity)*snf)/Number(price.SNFPrice)));
     const onsubmit=()=>{
-        data.totalAmount=(data.quantity*data.rate)
+        data.totalAmount=(data.quantity*data.price)
         data.type=data.type?data.type:new Date().getHours() >= 12 ? 'PM' : 'AM'; 
         store.memberStore.addDetails(route.params?.id,data)
-        
-        navigation.navigate(Routes.USER_DETAILS,{id:route.params?.id,adminID:route.params?.adminID});
+        navigation.goBack();
     }
     const updateData=(key: string,value:any )=>{
-        let rate=data.rate
-        if(key=='FAT')rate=rateCalculate(value,data.SNF)
-        else if(key=='SNF')rate=rateCalculate(data.FAT,value)
-        setData({...data,[key]:value,rate})
+        let price=data.price
+        if(key=='FAT')price=priceCalculate(value,data.SNF)
+        else if(key=='SNF')price=priceCalculate(data.FAT,value)
+        setData({...data,[key]:value,price})
         if(key){
             if(!value){
                 error[key]=true;
@@ -117,12 +111,12 @@ const EditDetailsScreen=({navigation,route}:SCREEN)=>{
                 </View>
                 <View className="flex-row justify-between pt-3" >
                     <View className="w-[45%]">
-                        <Text className="text-base pb-1">Rate</Text>
-                        <Text className="text-base pb-1 pl-2">{data?.rate ?Number(data.rate).toFixed(2):'0.00'}</Text>
+                        <Text className="text-base pb-1">Price</Text>
+                        <Text className="text-base pb-1 pl-2">{data?.price ?Number(data.price).toFixed(2):'0.00'}</Text>
                     </View>
                     <View className="w-[45%]"> 
                         <Text className="text-base pb-1">Total Amount</Text>
-                        <Text className="text-base pb-1 pl-1">{data?.quantity && data?.rate ?Number(data.rate*data.quantity).toFixed(2): '0.00' }</Text>
+                        <Text className="text-base pb-1 pl-1">{data?.quantity && data?.price ?Number(data.price*data.quantity).toFixed(2): '0.00' }</Text>
                     </View>
                 </View>
                 

@@ -1,7 +1,7 @@
 import Modal  from "react-native-modal";
 import{Text, TouchableOpacity, View,Image} from "react-native";
 import Button from "./Button";
-import {MaterialCommunityIcons,AntDesign,FontAwesome} from '@expo/vector-icons';
+import {MaterialCommunityIcons,AntDesign,MaterialIcons} from '@expo/vector-icons';
 
 import { useState } from "react";
 import CameraOpen from "./CameraOpen";
@@ -50,9 +50,9 @@ const ProfileModal=({setIsProfile,isProfile,navigation}:any)=>{
                   <Button onPress={()=>navigate(Routes.EDIT_USER)} classNames="w-[90%] py-3" title="Edit Profile"/>
                 </View>
                 <View className="p-3">
-                  <TouchableOpacity onPress={()=>{}} className="py-2 flex-row justify-start items-center">
-                    <FontAwesome name="rupee" size={30} color="green" className="pl-2" />
-                    <Text className="text-lg text-slate-500 font-bold px-6">Rate </Text>
+                  <TouchableOpacity onPress={()=>navigate(Routes.PRICE)} className="py-2 flex-row justify-start items-center">
+                    <MaterialIcons name="currency-rupee" size={30} color="green" />
+                    <Text className="text-lg text-slate-500 font-bold px-3">Price </Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>navigate(Routes.ADD_MEMBER)} className="py-2 flex-row justify-start items-end">
                     <AntDesign name="adduser" size={30} color="green"/>

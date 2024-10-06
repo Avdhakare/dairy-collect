@@ -5,53 +5,64 @@ import { Routes } from "../Constant/Routes";
 import DetailCard from "../Common/DetailCard";
 import ButtonGroups from "../Common/ButtonGroups";
 import AmountCard from "../Common/AmountCard";
-import { PROFILE, SCREEN } from "../Constant";
+import {dateFormet, PROFILE, SCREEN, slipData } from "../Constant";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
 import { observer } from "mobx-react";
 import { useIsFocused } from "@react-navigation/native";
+import DairySlipModel from "../Common/DairySlipModel";
+import Modal from "react-native-modal";
 
 const DetailsScreen=({navigation,route}:SCREEN)=>{
     const store=useGlobalStore();
-    const [dateSelect ,setDateSelect]=useState({startDate:new Date().getTime(),endDate:new Date().getTime()})
+    const [isSlip,setIsSlip]=useState<slipData|null>(null)
+    const [dateSelect ,setDateSelect]=useState<dateFormet>({}as dateFormet)
     const [showDetailCard, setShowDetailCard] = useState(true);
     const [details,setDetails]=useState<PROFILE>({} as PROFILE)
+    const [status,setStatus]=useState<boolean>(false)
     const isFocus=useIsFocused();
     useEffect(()=>{
-        const data:any=store.memberStore.member.find((item:PROFILE)=>(item.id===route.params.id && item.adminID===route.params.adminID))
-        setDetails({...data})
-    },[route.params,store.memberStore.member,isFocus])
-    useEffect(()=>{
-     navigation.setOptions({  
-        title:details?.name ,
-        headerRight: () => (
-            <TouchableOpacity onPress={()=> navigation.navigate(Routes.ADD_DETAILS,{id:details.id,adminID:route.params?.adminID})}>
-               <AntDesign name="pluscircleo" size={25} color="green" />
-            </TouchableOpacity>
-        )
-    })
-    setDateSelect({
-        startDate: details?.createTimestamp?details?.createTimestamp:new Date().getTime(),
-        endDate: details?.updateTimestamp?details?.updateTimestamp:new Date().getTime()
-     })
-},[details,navigation])
-  const handleScroll = (event: { nativeEvent: { contentOffset: { y: any; }; }; }) => {
-    const scrollOffsetY = event.nativeEvent.contentOffset.y;
-    if (scrollOffsetY > 50) setShowDetailCard(false);
-    else setShowDetailCard(true); 
-  };
+        navigation.setOptions({  
+            title:store.memberStore?.member?.name ,
+            headerRight: () => (
+                <TouchableOpacity onPress={()=> navigation.navigate(Routes.ADD_DETAILS,{id:store.memberStore?.member?.id})}>
+                <AntDesign name="pluscircleo" size={25} color="green" />
+                </TouchableOpacity>
+            )
+        })
+        DataFilterBaseOnDate({
+            createTimestamp: store.memberStore?.member?.createTimestamp?store.memberStore?.member?.createTimestamp:new Date().getTime(),
+            updateTimestamp: store.memberStore?.member?.updateTimestamp?store.memberStore?.member?.updateTimestamp:new Date().getTime()     
+        })
+    },[route.params,store.memberStore.members,isFocus])
+    const handleScroll = (event: { nativeEvent: { contentOffset: { y: any; }; }; }) => {
+        const scrollOffsetY = event.nativeEvent.contentOffset.y;
+        if (scrollOffsetY > 50) setShowDetailCard(false);
+        else setShowDetailCard(true); 
+    };
+    const DataFilterBaseOnDate=(date:{createTimestamp:EpochTimeStamp,updateTimestamp:EpochTimeStamp})=>{
+        const data:PROFILE=JSON.parse(JSON.stringify(store.memberStore.member));
+        data.details=store.memberStore.member.details.filter((item:any)=>(item.date>=date.createTimestamp && item.date<=date.updateTimestamp))
+        setDetails(data)
+        setStatus(!status)
+        setDateSelect(date)
+    }
+   console.log("Avdhhesh",isSlip)
     return( 
 
         <FlatList
-            data={details?.details}
-            renderItem={({item})=>(<AmountCard item={item}/>)}
+            data={details.details}
+            renderItem={({item})=>(<AmountCard item={item} epochToDateString={store.memberStore.epochToDateString} setIsSlip={setIsSlip}/>)}
             scrollEnabled={true}
             stickyHeaderIndices={[0]}
             onScroll={handleScroll} 
             scrollEventThrottle={16} 
             ListHeaderComponent={
                 <View className="bg-gray-50 shadow-lg mx-2">
-                    <DetailCard item={details} dateSelect={dateSelect}setDateSelect={setDateSelect}/>
-                    <ButtonGroups dateSelect={dateSelect} setDateSelect={setDateSelect}/>
+                    <Modal isVisible={isSlip!==null? true:false} onBackdropPress={()=>setIsSlip(null)}>
+                        <DairySlipModel isSlip={isSlip} adminName={store.authenticationStore.admin.name} member={store.memberStore.member} getDate={store.memberStore.epochToDateString} />
+                    </Modal>
+                    {showDetailCard &&(<DetailCard item={details} dateSelect={dateSelect}setDateSelect={DataFilterBaseOnDate}/>)}
+                    <ButtonGroups dateSelect={dateSelect} setDateSelect={DataFilterBaseOnDate}/>
                 </View>
             }
             ListEmptyComponent={

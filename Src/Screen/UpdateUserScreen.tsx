@@ -13,9 +13,9 @@ const UpdateUserScreen=({navigation}:SCREEN)=>{
     const [cameraVisible, setCameraVisible] = useState(false);
     const handleSubmit = async () => {
         if(data?.name && data?.mobileNumber){
-          setData({} as ADMIN)
           const check= store.authenticationStore.updateProfile(data)
           if(check) navigation.goBack()
+          setData({} as ADMIN)
         } 
        
     };

@@ -35,11 +35,11 @@ const DetailCard=({item,dateSelect,setDateSelect}:any)=>{
                 <View className="fle-1 flex-row justify-between items-center mt-1 ">
                     <View className="">
                         <Text className="text-blue-500 text-left text-base font-bold">Start Date</Text>
-                        <DatePicker item={dateSelect.startDate} getDateformPicker={(date)=>setDateSelect({...dateSelect,startDate:date})}/>
+                        <DatePicker item={dateSelect.createTimestamp} getDateformPicker={(date)=>setDateSelect({...dateSelect,createTimestamp:date})}/>
                     </View>
                     <View>
                         <Text className="text-blue-500 text-base font-bold text-right" >End Date</Text>
-                        <DatePicker item={dateSelect.endDate} getDateformPicker={(date)=>setDateSelect({...dateSelect,endDate:date})}/>
+                        <DatePicker item={dateSelect.updateTimestamp} getDateformPicker={(date)=>setDateSelect({...dateSelect,updateTimestamp:date})}/>
                     </View>
                 </View>
             </View>

@@ -10,6 +10,7 @@ import DetailsScreen from "../Screen/DetailsScreen";
 import { observer } from "mobx-react";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
 import UpdateUserScreen from "../Screen/UpdateUserScreen";
+import PriceScreen from "../Screen/PriceScreen";
 
 
 const AppNavigator=()=>{
@@ -34,9 +35,10 @@ return(
         <Stack.Screen name={Routes.ADD_MEMBER} component={EditMemberScreen}  options={{title:"Add Member"}} />
         <Stack.Screen name={Routes.EDIT_USER} component={UpdateUserScreen}  options={{title:"Update User Details"}} />
         <Stack.Screen name={Routes.ADD_DETAILS} component={EditDetailsScreen}  options={{title:"Add Information"}} />
+        <Stack.Screen name={Routes.PRICE} component={PriceScreen}  options={{title:"Update Price"}} />
       </Stack.Group>
       <Stack.Screen name={Routes.DASHBOARD} component={DashBoardScreen} options={{ title:'',headerLeft:()=>''}}/>
-      <Stack.Screen name={Routes.USER_DETAILS} component={DetailsScreen} options={{title:"User Details"}} />
+      <Stack.Screen name={Routes.USER_DETAILS} component={DetailsScreen} options={{title:''}} />
     </Stack.Navigator>
 </NavigationContainer>
 )

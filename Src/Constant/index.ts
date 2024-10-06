@@ -1,29 +1,15 @@
-import { Route } from "@react-navigation/native";
 import { GestureResponderEvent, KeyboardTypeOptions, NativeSyntheticEvent, TargetedEvent, TextInputFocusEventData } from "react-native";
 import { Timestamp } from "react-native-reanimated/lib/typescript/reanimated2/commonTypes";
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
  export interface ADMIN extends user{
     password:string| undefined;
     confirmPassward:string| undefined;
     email?:string|undefined;
     address?:string|undefined;
     city?:string|undefined;
-    pinCode?:string|undefined
-
+    pinCode?:string|undefined;
+    price?:PRICE |any;
 }
-export interface user{
-    id?:string|undefined;
-    name:string| undefined;
-    mobileNumber:string|undefined;
-    image?:string|undefined;
-    createTimestamp?:Timestamp|undefined;
-    updateTimestamp?:Timestamp|undefined;
-
-}
-
-export interface cameraOpen{
-    setCameraVisible:(value:boolean)=>void;
-    setPicture:(value:any)=>void
-} 
 export interface PROFILE extends user {
     adminID:string |undefined;
     totalAmount: number;
@@ -31,6 +17,27 @@ export interface PROFILE extends user {
     mobileNumber: string;
     details:any
 }
+export interface PRICE{
+    SNFPrice:number;
+    FATPrice:number;
+    actualPrice:number;
+    fatQuantity:number;
+    snfQuantity:number;
+    date:Timestamp;
+}
+export interface user extends dateFormet{
+    id?:string|undefined;
+    name:string| undefined;
+    mobileNumber:string|undefined;
+    image?:string|undefined;
+}
+
+
+export interface cameraOpen{
+    setCameraVisible:(value:boolean)=>void;
+    setPicture:(value:any)=>void
+} 
+
 export interface slipData{
     ID: string;
     date: EpochTimeStamp;
@@ -40,12 +47,18 @@ export interface slipData{
     milkType: string;
     AWM: number;
     quantity: number;
-    rate: number;
+    price: number;
     totalAmount: number;
 }
+export interface DAIRYSLIP{
+    isSlip:slipData;
+    adminName:string;
+    member:PROFILE;
+    getDate:(value:EpochTimeStamp,key:string)=>void;
+}
 export interface dateFormet{
-    endDate:EpochTimeStamp,
-    startDate:EpochTimeStamp
+    updateTimestamp:EpochTimeStamp,
+    createTimestamp:EpochTimeStamp
 }
  export interface buttonGroup{
     dateSelect:dateFormet
@@ -55,17 +68,7 @@ export interface datePicker{
     item:EpochTimeStamp,
     getDateformPicker:(item:EpochTimeStamp)=>void
 }
-export interface addDetailPupUp{
-    isVisible:boolean, 
-    onClose:()=>void,
-    onSubmit:(data:slipData)=>void,
-    actualPrice:actualPrice
-  }
-export interface actualPrice{
-    SNFRate:number,
-    FATRate:number,
-    actualRate:number
-}
+
 export interface detailTable{
     hideProfile:boolean,
     setHideProfile:(e:boolean)=>void
@@ -120,13 +123,6 @@ export interface BUTTON{
     classNames?:string;
 }
 
-export type NotificationType = 'success' | 'error' | 'info' | 'warning';
-
-export interface INotificationData{
-  title?: string,
-  message: string,
-  type: NotificationType,
-}
 export interface SCREEN{
     navigation?:any;
     route?:any;
