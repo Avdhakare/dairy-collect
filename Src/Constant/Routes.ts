@@ -9,7 +9,5 @@ export  const Routes={
     EDIT_USER:"EDIT_USER",
     ADD_DETAILS:"ADD_DETAILS",
     PRICE:"PRICE",
-
     USER_DETAILS:"USER_DETAILS",
-
 }

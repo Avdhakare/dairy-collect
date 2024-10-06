@@ -1,4 +1,3 @@
-import { Route } from "@react-navigation/native";
 import { GestureResponderEvent, KeyboardTypeOptions, NativeSyntheticEvent, TargetedEvent, TextInputFocusEventData } from "react-native";
 import { Timestamp } from "react-native-reanimated/lib/typescript/reanimated2/commonTypes";
 import { Float } from "react-native/Libraries/Types/CodegenTypes";
@@ -10,6 +9,13 @@ import { Float } from "react-native/Libraries/Types/CodegenTypes";
     city?:string|undefined;
     pinCode?:string|undefined;
     price?:PRICE |any;
+}
+export interface PROFILE extends user {
+    adminID:string |undefined;
+    totalAmount: number;
+    dueAmount: number;
+    mobileNumber: string;
+    details:any
 }
 export interface PRICE{
     SNFPrice:number;
@@ -31,13 +37,7 @@ export interface cameraOpen{
     setCameraVisible:(value:boolean)=>void;
     setPicture:(value:any)=>void
 } 
-export interface PROFILE extends user {
-    adminID:string |undefined;
-    totalAmount: number;
-    dueAmount: number;
-    mobileNumber: string;
-    details:any
-}
+
 export interface slipData{
     ID: string;
     date: EpochTimeStamp;
@@ -117,13 +117,6 @@ export interface BUTTON{
     classNames?:string;
 }
 
-export type NotificationType = 'success' | 'error' | 'info' | 'warning';
-
-export interface INotificationData{
-  title?: string,
-  message: string,
-  type: NotificationType,
-}
 export interface SCREEN{
     navigation?:any;
     route?:any;
