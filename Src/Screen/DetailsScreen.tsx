@@ -59,7 +59,7 @@ const DetailsScreen=({navigation,route}:SCREEN)=>{
             ListHeaderComponent={
                 <View className="bg-gray-50 shadow-lg mx-2">
                     <Modal isVisible={isSlip!==null? true:false} onBackdropPress={()=>setIsSlip(null)}>
-                        <DairySlipModel isSlip={isSlip} adminName={store.authenticationStore.admin.name} member={store.memberStore.member} />
+                        <DairySlipModel isSlip={isSlip} adminName={store.authenticationStore.admin.name} member={store.memberStore.member} getDate={store.memberStore.epochToDateString} />
                     </Modal>
                     {showDetailCard &&(<DetailCard item={details} dateSelect={dateSelect}setDateSelect={DataFilterBaseOnDate}/>)}
                     <ButtonGroups dateSelect={dateSelect} setDateSelect={DataFilterBaseOnDate}/>

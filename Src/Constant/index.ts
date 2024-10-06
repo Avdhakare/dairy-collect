@@ -50,6 +50,12 @@ export interface slipData{
     price: number;
     totalAmount: number;
 }
+export interface DAIRYSLIP{
+    isSlip:slipData;
+    adminName:string;
+    member:PROFILE;
+    getDate:(value:EpochTimeStamp,key:string)=>void;
+}
 export interface dateFormet{
     updateTimestamp:EpochTimeStamp,
     createTimestamp:EpochTimeStamp

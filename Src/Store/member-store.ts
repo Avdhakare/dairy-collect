@@ -86,7 +86,9 @@ export class memberStore  extends BaseStore{
         const month = String(date.getMonth()).padStart(2, '0');
         const monthDup = String(date.getMonth()+1).padStart(2, '0');
         const year:any = date.getFullYear();
+        const monthName = date.toLocaleString('default', { month: 'long' });
         if(key==="ID") return `${day}`+`${monthDup}`+`${year}`;
+        if(key==="MONTH") return `${day}-${monthName}-${year}`;
         return `${day}/${monthDup}/${year}`;
     }
 }

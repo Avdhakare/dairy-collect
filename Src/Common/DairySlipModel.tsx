@@ -1,23 +1,21 @@
 import {Text, View } from "react-native";
-import Modal from "react-native-modal";
-
-const DairySlipModel=({isSlip,adminName,member}:any)=>(
+const DairySlipModel=({isSlip,adminName,member,getDate}:any)=>(
         <View className="flex items-center justify-center min-h-screen">
             <View className="bg-white p-6 border border-gray-300 w-80">
-                <Text className="text-center font-bold text-lg mb-4 uppercase">{adminName} DAIRY</Text>
+                <Text className="text-center font-bold text-lg mb-4 uppercase">{adminName && adminName} DAIRY</Text>
                 <View className="flex-row justify-between mb-2">
                     <Text className="font-bold">DATE:</Text>
-                    <Text>03-Sep-2013</Text>
+                    <Text>{isSlip?.date && getDate(isSlip?.date,'getDate')}</Text>
                     <Text className="font-bold">SHIFT:</Text>
                     <Text>{isSlip?.type}</Text>
                 </View>
                 <View className="flex-row justify-between mb-2">
                     <Text className="font-bold">Name</Text>
-                    <Text>{member.name}</Text>
+                    <Text>{member?.name}</Text>
                 </View>
                 <View className="flex-row justify-between mb-2">
                     <Text className="font-bold">Phone NO</Text>
-                    <Text>{member.mobileNumber}</Text>
+                    <Text>{member?.mobileNumber}</Text>
                 </View>
                 <View className="border-t border-black mb-2" />
                 <View className="flex-row justify-between mb-2">
