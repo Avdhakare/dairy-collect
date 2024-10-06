@@ -5,13 +5,16 @@ import { Routes } from "../Constant/Routes";
 import DetailCard from "../Common/DetailCard";
 import ButtonGroups from "../Common/ButtonGroups";
 import AmountCard from "../Common/AmountCard";
-import {dateFormet, PROFILE, SCREEN } from "../Constant";
+import {dateFormet, PROFILE, SCREEN, slipData } from "../Constant";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
 import { observer } from "mobx-react";
 import { useIsFocused } from "@react-navigation/native";
+import DairySlipModel from "../Common/DairySlipModel";
+import Modal from "react-native-modal";
 
 const DetailsScreen=({navigation,route}:SCREEN)=>{
     const store=useGlobalStore();
+    const [isSlip,setIsSlip]=useState<slipData|null>(null)
     const [dateSelect ,setDateSelect]=useState<dateFormet>({}as dateFormet)
     const [showDetailCard, setShowDetailCard] = useState(true);
     const [details,setDetails]=useState<PROFILE>({} as PROFILE)
@@ -43,17 +46,21 @@ const DetailsScreen=({navigation,route}:SCREEN)=>{
         setStatus(!status)
         setDateSelect(date)
     }
+   console.log("Avdhhesh",isSlip)
     return( 
 
         <FlatList
             data={details.details}
-            renderItem={({item})=>(<AmountCard item={item} epochToDateString={store.memberStore.epochToDateString}/>)}
+            renderItem={({item})=>(<AmountCard item={item} epochToDateString={store.memberStore.epochToDateString} setIsSlip={setIsSlip}/>)}
             scrollEnabled={true}
             stickyHeaderIndices={[0]}
             onScroll={handleScroll} 
             scrollEventThrottle={16} 
             ListHeaderComponent={
                 <View className="bg-gray-50 shadow-lg mx-2">
+                    <Modal isVisible={isSlip!==null? true:false} onBackdropPress={()=>setIsSlip(null)}>
+                        <DairySlipModel isSlip={isSlip} adminName={store.authenticationStore.admin.name} member={store.memberStore.member} />
+                    </Modal>
                     {showDetailCard &&(<DetailCard item={details} dateSelect={dateSelect}setDateSelect={DataFilterBaseOnDate}/>)}
                     <ButtonGroups dateSelect={dateSelect} setDateSelect={DataFilterBaseOnDate}/>
                 </View>
