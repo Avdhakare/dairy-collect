@@ -6,7 +6,7 @@ import Input from "../Common/Input";
 import DropDown from "../Common/DropDown";
 import DatePicker from "../Common/DatePicker";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
-import { Routes } from "../Constant/Routes";
+const regex = /^\d+(\.\d)?$/;
 
 
 const EditDetailsScreen=({navigation,route}:SCREEN)=>{
@@ -63,7 +63,7 @@ const EditDetailsScreen=({navigation,route}:SCREEN)=>{
                         <Text className="text-base pb-1">Time</Text>
                         <DropDown
                             value={data.type}
-                            onChange={(itemValue, itemIndex) =>updateData('type',(itemValue))}
+                            onChange={(itemValue, itemIndex) =>updateData('type',itemValue)}
                             options={options}
                         />
                     
@@ -74,18 +74,20 @@ const EditDetailsScreen=({navigation,route}:SCREEN)=>{
                         <Text className="text-base pb-1">FAT</Text>
                         <Input 
                             onChange={(e) =>updateData('FAT',Number(e))}
-                            value={data.FAT ? String(data.FAT) :undefined}
+                            value={data.FAT ? data.FAT :undefined}
                             placeholder="FAT"
                             type="phone-pad"
+                            error={error?.FAT}
                         />
                     </View>
                     <View className="w-[45%]">
                         <Text className="text-base pb-1">SNF</Text>
                         <Input
                             placeholder="SNF"
-                            value={data.SNF?String(data.SNF):undefined}
+                            value={data.SNF?data.SNF:undefined}
                             onChange={(e) => updateData('SNF',Number(e))}
                             type="phone-pad"
+                            error={error?.SNF}
                         />
                     </View>
                 </View>
@@ -94,18 +96,20 @@ const EditDetailsScreen=({navigation,route}:SCREEN)=>{
                         <Text className="text-base pb-1">AWM</Text>
                         <Input
                             placeholder="AWM"
-                            value={data.AWM?String(data.AWM):undefined}
+                            value={data.AWM?data.AWM:undefined}
                             onChange={(e) => updateData("AWM",Number(e))}
                             type="phone-pad"
+                            error={error?.AWM}
                         />
                     </View>
                     <View  className="w-[45%]">
                         <Text className="text-base pb-1">Quantity</Text>
                         <Input
                             placeholder="Quantity"
-                            value={data.quantity?String(data.quantity):undefined}
-                            onChange={(e) => updateData('quantity',Number(e))}
+                            value={data.quantity?data.quantity:undefined}
+                            onChange={(e) =>  updateData('quantity',Number(e))}
                             type="phone-pad"
+                            error={error?.quantity}
                         />
                     </View>
                 </View>

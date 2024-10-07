@@ -7,6 +7,7 @@ import UserCard from "../Common/UserCard";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import ProfileModal from "../Common/ProfileModal";
+import NoMessageCard from "../Common/NoMessageCard";
 
 const DashBoardScreen=({navigation}:SCREEN)=>{
     const store= useGlobalStore();
@@ -52,11 +53,7 @@ const DashBoardScreen=({navigation}:SCREEN)=>{
                     />
                 )}
                 keyExtractor={(item) => item.id}
-                ListEmptyComponent={
-                    <View className="h-20 flex-col justify-center m-5 shadow-lg rounded-lg bg-white ">
-                        <Text className="text-center text-lg text-slate-400 ">No Member Available</Text>
-                    </View>
-                }
+                ListEmptyComponent={<NoMessageCard title='No Member Available'/>}
             />  
         </View>      
     )

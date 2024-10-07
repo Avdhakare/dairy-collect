@@ -7,10 +7,10 @@ import DatePicker from "../Common/DatePicker";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
 
 const PriceScreen=({navigation,route}:SCREEN)=>{
-    const [data, setData] = useState<PRICE>({fatQuantity:52,snfQuantity:48,date:new Date().getTime()}as PRICE);
+    const [data, setData] = useState<PRICE>({fatQuantity:'52',snfQuantity:'48',date:new Date().getTime()}as PRICE);
     const [error,setError]=useState<any>({SNFPrice:false,FATPrice:false,actualPrice:false})
     const store=useGlobalStore();
-    const [disabledKey,setDisabledKey]=useState(['SNFPrice','FATPrice','actualPrice'])
+    const [disabledKey,setDisabledKey]=useState<string[]>([])
     useEffect(()=>{
         setData(store.authenticationStore.price)
     },[store.authenticationStore.price])
@@ -35,6 +35,7 @@ const PriceScreen=({navigation,route}:SCREEN)=>{
         }
         setError(error)
     };
+    console.log("disabledKey",disabledKey)
     return(
         <View className="bg-cyan-50 rounded-md  items-center flex-col justify-between h-full py-5">
             <View>
@@ -47,10 +48,11 @@ const PriceScreen=({navigation,route}:SCREEN)=>{
                     <View className="w-[45%]">
                         <Text className="text-base pb-1">Actual Price</Text>
                         <Input 
-                            onChange={(e) =>updateData('actualPrice',Number(e))}
-                            value={data.actualPrice ? String(data.actualPrice) :undefined}
+                            onChange={(e) =>updateData('actualPrice',e)}
+                            value={String(data.actualPrice )}
                             placeholder="Actual price"
                             type="phone-pad"
+                            error={error?.actualPrice}
                         />
                     </View>
                 </View>
@@ -58,19 +60,21 @@ const PriceScreen=({navigation,route}:SCREEN)=>{
                     <View className="w-[45%]">
                         <Text className="text-base pb-1">FAT Price</Text>
                         <Input 
-                            onChange={(e) =>updateData('FATPrice',Number(e))}
-                            value={data.FATPrice ? String(data.FATPrice) :undefined}
+                            onChange={(e) =>updateData('FATPrice',e)}
+                            value={String(data.FATPrice )}
                             placeholder="FAT Price"
                             type="phone-pad"
+                            error={error?.FATPrice}
                         />
                     </View>
                     <View className="w-[45%]">
                         <Text className="text-base pb-1">SNF</Text>
                         <Input
                             placeholder="SNF Price"
-                            value={data.SNFPrice?String(data.SNFPrice):undefined}
-                            onChange={(e) => updateData('SNFPrice',Number(e))}
+                            value={String(data.SNFPrice)}
+                            onChange={(e) => updateData('SNFPrice',e)}
                             type="phone-pad"
+                            error={error?.SNFPrice}
                         />
                     </View>
                 </View>
@@ -79,18 +83,20 @@ const PriceScreen=({navigation,route}:SCREEN)=>{
                         <Text className="text-base pb-1">FAT Quantity</Text>
                         <Input
                             placeholder="FAT Quantity"
-                            value={data.fatQuantity?String(data.fatQuantity):undefined}
-                            onChange={(e) => updateData("fatQuantity",Number(e))}
+                            value={String(data.fatQuantity)}
+                            onChange={(e) => updateData("fatQuantity",e)}
                             type="phone-pad"
+                            error={error?.fatQuantity}
                         />
                     </View>
                     <View  className="w-[45%]">
                         <Text className="text-base pb-1">SNF Quantity</Text>
                         <Input
                             placeholder="SNF Quantity"
-                            value={data.snfQuantity?String(data.snfQuantity):undefined}
-                            onChange={(e) => updateData('snfQuantity',Number(e))}
+                            value={String(data.snfQuantity)}
+                            onChange={(e) => updateData('snfQuantity',e)}
                             type="phone-pad"
+                            error={error?.snfQuantity}
                         />
                     </View>
                 </View>
