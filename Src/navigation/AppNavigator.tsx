@@ -11,6 +11,8 @@ import { observer } from "mobx-react";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
 import UpdateUserScreen from "../Screen/UpdateUserScreen";
 import PriceScreen from "../Screen/PriceScreen";
+import SlipViewScreen from "../Screen/SlipViewScreen";
+import PaymentScreen from "../Screen/PaymentScreen";
 
 
 const AppNavigator=()=>{
@@ -36,6 +38,9 @@ return(
         <Stack.Screen name={Routes.EDIT_USER} component={UpdateUserScreen}  options={{title:"Update User Details"}} />
         <Stack.Screen name={Routes.ADD_DETAILS} component={EditDetailsScreen}  options={{title:"Add Information"}} />
         <Stack.Screen name={Routes.PRICE} component={PriceScreen}  options={{title:"Update Price"}} />
+        <Stack.Screen name={Routes.SLIP_VIEW_CONTAINER} component={SlipViewScreen}  options={{title:"ALL Slip Details"}} />
+        <Stack.Screen name={Routes.PAYMENT} component={PaymentScreen}  options={{title:"ALL Payment Details"}} />
+
       </Stack.Group>
       <Stack.Screen name={Routes.DASHBOARD} component={DashBoardScreen} options={{ title:'',headerLeft:()=>''}}/>
       <Stack.Screen name={Routes.USER_DETAILS} component={DetailsScreen} options={{title:''}} />

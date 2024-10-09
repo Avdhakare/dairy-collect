@@ -7,9 +7,10 @@ import { useState } from "react";
 import CameraOpen from "./CameraOpen";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
 import { Routes } from "../Constant/Routes";
+import PopOver from "./PopOver";
 
 
-const ProfileModal=({setIsProfile,isProfile,navigation}:any)=>{
+const Profile=({setIsProfile,isProfile,navigation}:any)=>{
     const [cameraVisible, setCameraVisible] = useState(false);
     const store=useGlobalStore();
     const{authenticationStore:{
@@ -24,11 +25,13 @@ const ProfileModal=({setIsProfile,isProfile,navigation}:any)=>{
       setIsProfile(false)
     }
     return (
-        <Modal  isVisible={isProfile}  onBackdropPress={()=>setIsProfile(!isProfile)}>
+        <PopOver  isVisible={isProfile}  setIsVisible={setIsProfile}>
             {cameraVisible ? (
+              <View className="w-screen h-screen">
                 <CameraOpen setCameraVisible={setCameraVisible} setPicture={(e: any)=>updateProfileImage('image',e)}/>
+              </View>
             ) :(
-            <View className="bg-white py-3 px-2 rounded-md">
+            <View className="py-1 w-[370]">
                 <View className="border-2 border-green-300 w-[150] h-[150] relative flex flex-row mx-auto items-center rounded-full">
                     {admin.image ? (
                       <Image source={{ uri: admin.image }} className=' w-full h-full rounded-full' />
@@ -64,7 +67,7 @@ const ProfileModal=({setIsProfile,isProfile,navigation}:any)=>{
                   </TouchableOpacity>
                 </View>
             </View>)}
-        </Modal>
+        </PopOver>
     )
 }
-export default ProfileModal;
+export default Profile;

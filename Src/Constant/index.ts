@@ -15,14 +15,17 @@ export interface PROFILE extends user {
     totalAmount: number;
     dueAmount: number;
     mobileNumber: string;
-    details:any
+    details:any,
+    payment:PAYMENT[]
+    recieved:number,
+    send:number
 }
 export interface PRICE{
-    SNFPrice:number;
-    FATPrice:number;
-    actualPrice:number;
-    fatQuantity:number;
-    snfQuantity:number;
+    SNFPrice:string;
+    FATPrice:string;
+    actualPrice:string;
+    fatQuantity:string;
+    snfQuantity:string;
     date:Timestamp;
 }
 export interface user extends dateFormet{
@@ -106,6 +109,7 @@ export  interface INPUT{
     isSecure?:boolean;
     maxLength?:number;
     readOnly?:boolean;
+    error?:boolean;
 }
 export interface DropDownEnum {
     value:number|string|undefined,
@@ -133,4 +137,13 @@ export enum BUTTONGROUPSENUM {
     WEEK="WEEK",
     MONTH="MONTH",
 
+}
+export enum PAYMENTTYPE{
+    CREDIT="CREDIT",
+    DEBIT='DEBIT',
+}
+export interface PAYMENT{
+    type:PAYMENTTYPE,
+    amount: number,
+    date: EpochTimeStamp,
 }

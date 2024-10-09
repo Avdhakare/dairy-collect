@@ -3,7 +3,7 @@ import { BaseStore, StoreConstructorArgs } from "./base-store";
 import { makeObservable, observable, action, computed, runInAction } from 'mobx';
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PROFILE, slipData } from "../Constant";
+import { PAYMENT, PAYMENTTYPE, PROFILE, slipData } from "../Constant";
 
 export class memberStore  extends BaseStore{
     members:PROFILE[]=[{} as PROFILE ] as PROFILE[];
@@ -80,15 +80,36 @@ export class memberStore  extends BaseStore{
             this.member=this.members.find((item:PROFILE)=>(item.id===id && item.adminID===adminID))
         })
     }
+    setPayment=(data:PAYMENT)=>{
+        const paymentData:any[]=this.member?.payment?this.member?.payment:[]
+        paymentData.push({...data})
+        let debitAmount=0;
+        let creditAmount=0;
+        paymentData.map(item=>{
+            if(item.type===PAYMENTTYPE.DEBIT) debitAmount=debitAmount+Number(item.amount)
+            if(item.type===PAYMENTTYPE.CREDIT) creditAmount=creditAmount+Number(item.amount)
+        })
+       
+        runInAction(()=>{
+            this.member={...this.member,send:debitAmount,recieved:creditAmount,payment:paymentData.sort((a:any, b:any) => b.date - a.date)}
+            this.members=this.members.map((item:PROFILE)=>{
+                if(item.id===this.member.id) return {...this.member,send:debitAmount,recieved:creditAmount,payment:paymentData.sort((a:any, b:any) => b.date - a.date)}
+                else return item
+            })
+        })
+    }
     epochToDateString(epoch:any,key?:string) {
         const date = new Date(parseInt(epoch));
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth()).padStart(2, '0');
         const monthDup = String(date.getMonth()+1).padStart(2, '0');
+        const hour=date.getHours();
+        const minute=date.getMinutes()
         const year:any = date.getFullYear();
         const monthName = date.toLocaleString('default', { month: 'long' });
         if(key==="ID") return `${day}`+`${monthDup}`+`${year}`;
-        if(key==="MONTH") return `${day}-${monthName}-${year}`;
+        if(key==="MONTH") return `${day} ${monthName.substring(0,3).toUpperCase()} ${year}`;
+        if(key==="DATE") return `${hour}:${minute} ${hour >= 12 ? 'PM' : 'AM'}`
         return `${day}/${monthDup}/${year}`;
     }
 }

@@ -1,11 +1,10 @@
 import {Text, View } from "react-native";
-const DairySlipModel=({isSlip,adminName,member,getDate}:any)=>(
-        <View className="flex items-center justify-center min-h-screen">
-            <View className="bg-white p-6 border border-gray-300 w-80">
+const DairySlip=({isSlip,adminName,member,getDate}:any)=>(
+            <View className="p-4 w-80">
                 <Text className="text-center font-bold text-lg mb-4 uppercase">{adminName && adminName} DAIRY</Text>
                 <View className="flex-row justify-between mb-2">
                     <Text className="font-bold">DATE:</Text>
-                    <Text>{isSlip?.date && getDate(isSlip?.date,'getDate')}</Text>
+                    <Text>{isSlip?.date && getDate(isSlip?.date,'MONTH')}</Text>
                     <Text className="font-bold">SHIFT:</Text>
                     <Text>{isSlip?.type}</Text>
                 </View>
@@ -49,6 +48,5 @@ const DairySlipModel=({isSlip,adminName,member,getDate}:any)=>(
                     <Text className="absolute right-[170] top-1"> ***</Text>
                 </View>
             </View>
-        </View>
     );
-export default DairySlipModel;
+export default DairySlip;

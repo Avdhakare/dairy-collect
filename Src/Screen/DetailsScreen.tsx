@@ -9,8 +9,10 @@ import {dateFormet, PROFILE, SCREEN, slipData } from "../Constant";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
 import { observer } from "mobx-react";
 import { useIsFocused } from "@react-navigation/native";
-import DairySlipModel from "../Common/DairySlipModel";
+import DairySlip from "../Common/DairySlip";
 import Modal from "react-native-modal";
+import NoMessageCard from "../Common/NoMessageCard";
+import PopOver from "../Common/PopOver";
 
 const DetailsScreen=({navigation,route}:SCREEN)=>{
     const store=useGlobalStore();
@@ -24,16 +26,21 @@ const DetailsScreen=({navigation,route}:SCREEN)=>{
         navigation.setOptions({  
             title:store.memberStore?.member?.name ,
             headerRight: () => (
-                <TouchableOpacity onPress={()=> navigation.navigate(Routes.ADD_DETAILS,{id:store.memberStore?.member?.id})}>
-                <AntDesign name="pluscircleo" size={25} color="green" />
-                </TouchableOpacity>
+                <View className="flex-row justify-end items-center">
+                    <TouchableOpacity onPress={()=> navigation.navigate(Routes.ADD_DETAILS,{id:store.memberStore?.member?.id})} className="p-3">
+                        <AntDesign name="pluscircleo" size={30} color="green" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> navigation.navigate(Routes.SLIP_VIEW_CONTAINER,{id:store.memberStore?.member?.id})} className="p-3">
+                        <AntDesign name="printer" size={30} color="green" />
+                    </TouchableOpacity>
+                </View>
             )
         })
         DataFilterBaseOnDate({
             createTimestamp: store.memberStore?.member?.createTimestamp?store.memberStore?.member?.createTimestamp:new Date().getTime(),
             updateTimestamp: store.memberStore?.member?.updateTimestamp?store.memberStore?.member?.updateTimestamp:new Date().getTime()     
         })
-    },[route.params,store.memberStore.members,isFocus])
+    },[store.memberStore.members,isFocus])
     const handleScroll = (event: { nativeEvent: { contentOffset: { y: any; }; }; }) => {
         const scrollOffsetY = event.nativeEvent.contentOffset.y;
         if (scrollOffsetY > 50) setShowDetailCard(false);
@@ -46,7 +53,6 @@ const DetailsScreen=({navigation,route}:SCREEN)=>{
         setStatus(!status)
         setDateSelect(date)
     }
-   console.log("Avdhhesh",isSlip)
     return( 
 
         <FlatList
@@ -58,19 +64,14 @@ const DetailsScreen=({navigation,route}:SCREEN)=>{
             scrollEventThrottle={16} 
             ListHeaderComponent={
                 <View className="bg-gray-50 shadow-lg mx-2">
-                    <Modal isVisible={isSlip!==null? true:false} onBackdropPress={()=>setIsSlip(null)}>
-                        <DairySlipModel isSlip={isSlip} adminName={store.authenticationStore.admin.name} member={store.memberStore.member} getDate={store.memberStore.epochToDateString} />
-                    </Modal>
-                    {showDetailCard &&(<DetailCard item={details} dateSelect={dateSelect}setDateSelect={DataFilterBaseOnDate}/>)}
+                    <PopOver isVisible={isSlip!==null? true:false} setIsVisible={()=>setIsSlip(null)}>
+                        <DairySlip isSlip={isSlip} adminName={store.authenticationStore.admin.name} member={store.memberStore.member} getDate={store.memberStore.epochToDateString} />
+                    </PopOver>
+                    {showDetailCard &&(<DetailCard item={details} dateSelect={dateSelect}setDateSelect={DataFilterBaseOnDate} onPayment={()=>navigation.navigate(Routes.PAYMENT)} isDate={true}/>)}
                     <ButtonGroups dateSelect={dateSelect} setDateSelect={DataFilterBaseOnDate}/>
                 </View>
             }
-            ListEmptyComponent={
-                <View className="h-20 flex-col justify-center m-5 shadow-lg rounded-lg bg-white">
-                    <Text className="text-center text-lg text-slate-400 ">No Record Available</Text>
-                </View>
-            }
-            
+            ListEmptyComponent={<NoMessageCard />} 
         />
     )
 }
