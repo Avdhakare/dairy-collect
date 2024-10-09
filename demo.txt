@@ -1,0 +1,482 @@
+const createPdf = async () => {
+    const htmlContent = `
+      <html>
+<head>
+    <style>
+        .card {
+          background-color: white;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+          padding: 8px; /* p-2 */
+          border-radius: 12px; /* rounded-lg */
+          border: 1px solid #38a169; /* border-green-400 */
+          margin: 8px; /* m-2 */
+          height: fit-content; /* h-[200] */
+          margin: 50px 0 ;
+        }
+
+        .date {
+          color: #3b82f6; /* text-blue-500 */
+          font-weight: bold; /* font-bold */
+          font-size: 16px; /* text-base */
+        }
+
+        .content {
+          display: flex;
+          flex: 1;
+          flex-wrap: wrap;
+          flex-direction: row;
+          justify-content: space-between;
+          padding: 0 8px; /* px-2 */
+        }
+        .container {
+          padding: 16px;
+          width: 320px;
+          border:2px solid black;
+          border-radius: 10px;
+          margin-bottom: 20px;
+        }
+
+        .title {
+          text-align: center;
+          font-weight: bold;
+          font-size: 1.125rem; /* text-lg */
+          margin-bottom: 16px;
+          text-transform: uppercase; /* uppercase */
+        }
+
+        .row {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 8px;
+        }
+
+        .label {
+          font-weight: bold;
+        }
+
+        .separator {
+          border-top: 1px solid black;
+          margin-bottom: 8px;
+        }
+
+        .welcome-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+        }
+        .asterisk {
+            position: absolute;
+            top: 3;
+        }
+        .asterisk:first-child {
+            left: 210px;
+        }
+
+        .asterisk:last-child {
+            right: 210px;
+        }
+    </style>
+</head>
+<body>
+   <div class="card">
+  <p class="date">
+    Date:20/05/2000
+  </p>
+
+  <div class="content">
+    <div class="container">
+      <h1 class="title">
+        Avdhesh Dhakare DAIRY</h1>
+
+      <div class="row">
+        <span class="label">DATE:</span>
+        <span>20 OCT 2000</span>
+        <span class="label">SHIFT:</span>
+        <span>AM</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Name</span>
+        <span>Avdhesh Dhakare</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Phone NO</span>
+        <span>8445667407</span>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="row">
+        <span class="label">FAT</span>
+        <span>2</span>
+      </div>
+
+      <div class="row">
+        <span class="label">SNF</span>
+        <span>1</span>
+      </div>
+
+      <div class="row">
+        <span class="label">LITRE</span>
+        <span>2</span>
+      </div>
+
+      <div class="row">
+        <span class="label">AWM</span>
+        <span>2</span>
+      </div>
+
+      <div class="row">
+        <span class="label">RATE PER LITRE</span>
+        <span>4</span>
+      </div>
+
+      <div class="row">
+        <span class="label">TOTAL AMOUNT</span>
+        <span>5</span>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="welcome-container">
+        <span class="asterisk">***</span>
+        <span>WELCOME</span>
+        <span class="asterisk">***</span>
+      </div>
+    </div>
+    <div class="container">
+        <h1 class="title">
+          Avdhesh Dhakare DAIRY</h1>
+
+        <div class="row">
+          <span class="label">DATE:</span>
+          <span>20 OCT 2000</span>
+          <span class="label">SHIFT:</span>
+          <span>AM</span>
+        </div>
+
+        <div class="row">
+          <span class="label">Name</span>
+          <span>Avdhesh Dhakare</span>
+        </div>
+
+        <div class="row">
+          <span class="label">Phone NO</span>
+          <span>8445667407</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="row">
+          <span class="label">FAT</span>
+          <span>2</span>
+        </div>
+
+        <div class="row">
+          <span class="label">SNF</span>
+          <span>1</span>
+        </div>
+
+        <div class="row">
+          <span class="label">LITRE</span>
+          <span>2</span>
+        </div>
+
+        <div class="row">
+          <span class="label">AWM</span>
+          <span>2</span>
+        </div>
+
+        <div class="row">
+          <span class="label">RATE PER LITRE</span>
+          <span>4</span>
+        </div>
+
+        <div class="row">
+          <span class="label">TOTAL AMOUNT</span>
+          <span>5</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="welcome-container">
+          <span class="asterisk">***</span>
+          <span>WELCOME</span>
+          <span class="asterisk">***</span>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="card">
+    <p class="date">
+      Date:20/05/2000
+    </p>
+
+    <div class="content">
+      <div class="container">
+        <h1 class="title">
+          Avdhesh Dhakare DAIRY</h1>
+
+        <div class="row">
+          <span class="label">DATE:</span>
+          <span>20 OCT 2000</span>
+          <span class="label">SHIFT:</span>
+          <span>AM</span>
+        </div>
+
+        <div class="row">
+          <span class="label">Name</span>
+          <span>Avdhesh Dhakare</span>
+        </div>
+
+        <div class="row">
+          <span class="label">Phone NO</span>
+          <span>8445667407</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="row">
+          <span class="label">FAT</span>
+          <span>2</span>
+        </div>
+
+        <div class="row">
+          <span class="label">SNF</span>
+          <span>1</span>
+        </div>
+
+        <div class="row">
+          <span class="label">LITRE</span>
+          <span>2</span>
+        </div>
+
+        <div class="row">
+          <span class="label">AWM</span>
+          <span>2</span>
+        </div>
+
+        <div class="row">
+          <span class="label">RATE PER LITRE</span>
+          <span>4</span>
+        </div>
+
+        <div class="row">
+          <span class="label">TOTAL AMOUNT</span>
+          <span>5</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="welcome-container">
+          <span class="asterisk">***</span>
+          <span>WELCOME</span>
+          <span class="asterisk">***</span>
+        </div>
+      </div>
+      <div class="container">
+          <h1 class="title">
+            Avdhesh Dhakare DAIRY</h1>
+
+          <div class="row">
+            <span class="label">DATE:</span>
+            <span>20 OCT 2000</span>
+            <span class="label">SHIFT:</span>
+            <span>AM</span>
+          </div>
+
+          <div class="row">
+            <span class="label">Name</span>
+            <span>Avdhesh Dhakare</span>
+          </div>
+
+          <div class="row">
+            <span class="label">Phone NO</span>
+            <span>8445667407</span>
+          </div>
+
+          <div class="separator"></div>
+
+          <div class="row">
+            <span class="label">FAT</span>
+            <span>2</span>
+          </div>
+
+          <div class="row">
+            <span class="label">SNF</span>
+            <span>1</span>
+          </div>
+
+          <div class="row">
+            <span class="label">LITRE</span>
+            <span>2</span>
+          </div>
+
+          <div class="row">
+            <span class="label">AWM</span>
+            <span>2</span>
+          </div>
+
+          <div class="row">
+            <span class="label">RATE PER LITRE</span>
+            <span>4</span>
+          </div>
+
+          <div class="row">
+            <span class="label">TOTAL AMOUNT</span>
+            <span>5</span>
+          </div>
+
+          <div class="separator"></div>
+
+          <div class="welcome-container">
+            <span class="asterisk">***</span>
+            <span>WELCOME</span>
+            <span class="asterisk">***</span>
+          </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <p class="date">
+      Date:20/05/2000
+    </p>
+
+    <div class="content">
+      <div class="container">
+        <h1 class="title">
+          Avdhesh Dhakare DAIRY</h1>
+
+        <div class="row">
+          <span class="label">DATE:</span>
+          <span>20 OCT 2000</span>
+          <span class="label">SHIFT:</span>
+          <span>AM</span>
+        </div>
+
+        <div class="row">
+          <span class="label">Name</span>
+          <span>Avdhesh Dhakare</span>
+        </div>
+
+        <div class="row">
+          <span class="label">Phone NO</span>
+          <span>8445667407</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="row">
+          <span class="label">FAT</span>
+          <span>2</span>
+        </div>
+
+        <div class="row">
+          <span class="label">SNF</span>
+          <span>1</span>
+        </div>
+
+        <div class="row">
+          <span class="label">LITRE</span>
+          <span>2</span>
+        </div>
+
+        <div class="row">
+          <span class="label">AWM</span>
+          <span>2</span>
+        </div>
+
+        <div class="row">
+          <span class="label">RATE PER LITRE</span>
+          <span>4</span>
+        </div>
+
+        <div class="row">
+          <span class="label">TOTAL AMOUNT</span>
+          <span>5</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="welcome-container">
+          <span class="asterisk">***</span>
+          <span>WELCOME</span>
+          <span class="asterisk">***</span>
+        </div>
+      </div>
+      <div class="container">
+          <h1 class="title">
+            Avdhesh Dhakare DAIRY</h1>
+
+          <div class="row">
+            <span class="label">DATE:</span>
+            <span>20 OCT 2000</span>
+            <span class="label">SHIFT:</span>
+            <span>AM</span>
+          </div>
+
+          <div class="row">
+            <span class="label">Name</span>
+            <span>Avdhesh Dhakare</span>
+          </div>
+
+          <div class="row">
+            <span class="label">Phone NO</span>
+            <span>8445667407</span>
+          </div>
+
+          <div class="separator"></div>
+
+          <div class="row">
+            <span class="label">FAT</span>
+            <span>2</span>
+          </div>
+
+          <div class="row">
+            <span class="label">SNF</span>
+            <span>1</span>
+          </div>
+
+          <div class="row">
+            <span class="label">LITRE</span>
+            <span>2</span>
+          </div>
+
+          <div class="row">
+            <span class="label">AWM</span>
+            <span>2</span>
+          </div>
+
+          <div class="row">
+            <span class="label">RATE PER LITRE</span>
+            <span>4</span>
+          </div>
+
+          <div class="row">
+            <span class="label">TOTAL AMOUNT</span>
+            <span>5</span>
+          </div>
+
+          <div class="separator"></div>
+
+          <div class="welcome-container">
+            <span class="asterisk">***</span>
+            <span>WELCOME</span>
+            <span class="asterisk">***</span>
+          </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+    `;
+
+    // Generate the PDF
+    const { uri,numberOfPages=20} = await Print.printToFileAsync({ html: htmlContent,});
+
+    // Share the PDF
+    await Sharing.shareAsync(uri,{mimeType: 'application/pdf',});
+  };
