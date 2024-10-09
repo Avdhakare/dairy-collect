@@ -9,9 +9,10 @@ import {dateFormet, PROFILE, SCREEN, slipData } from "../Constant";
 import { useGlobalStore } from "../Hooks/useGlobalStore";
 import { observer } from "mobx-react";
 import { useIsFocused } from "@react-navigation/native";
-import DairySlipModel from "../Common/DairySlipModel";
+import DairySlip from "../Common/DairySlip";
 import Modal from "react-native-modal";
 import NoMessageCard from "../Common/NoMessageCard";
+import PopOver from "../Common/PopOver";
 
 const DetailsScreen=({navigation,route}:SCREEN)=>{
     const store=useGlobalStore();
@@ -63,9 +64,9 @@ const DetailsScreen=({navigation,route}:SCREEN)=>{
             scrollEventThrottle={16} 
             ListHeaderComponent={
                 <View className="bg-gray-50 shadow-lg mx-2">
-                    <Modal isVisible={isSlip!==null? true:false} onBackdropPress={()=>setIsSlip(null)}>
-                        <DairySlipModel isSlip={isSlip} adminName={store.authenticationStore.admin.name} member={store.memberStore.member} getDate={store.memberStore.epochToDateString} />
-                    </Modal>
+                    <PopOver isVisible={isSlip!==null? true:false} setIsVisible={()=>setIsSlip(null)}>
+                        <DairySlip isSlip={isSlip} adminName={store.authenticationStore.admin.name} member={store.memberStore.member} getDate={store.memberStore.epochToDateString} />
+                    </PopOver>
                     {showDetailCard &&(<DetailCard item={details} dateSelect={dateSelect}setDateSelect={DataFilterBaseOnDate} onPayment={()=>navigation.navigate(Routes.PAYMENT)} isDate={true}/>)}
                     <ButtonGroups dateSelect={dateSelect} setDateSelect={DataFilterBaseOnDate}/>
                 </View>

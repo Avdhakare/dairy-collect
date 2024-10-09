@@ -15,7 +15,10 @@ export interface PROFILE extends user {
     totalAmount: number;
     dueAmount: number;
     mobileNumber: string;
-    details:any
+    details:any,
+    payment:PAYMENT[]
+    recieved:number,
+    send:number
 }
 export interface PRICE{
     SNFPrice:string;
@@ -134,4 +137,13 @@ export enum BUTTONGROUPSENUM {
     WEEK="WEEK",
     MONTH="MONTH",
 
+}
+export enum PAYMENTTYPE{
+    CREDIT="CREDIT",
+    DEBIT='DEBIT',
+}
+export interface PAYMENT{
+    type:PAYMENTTYPE,
+    amount: number,
+    date: EpochTimeStamp,
 }

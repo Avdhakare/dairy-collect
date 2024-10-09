@@ -1,5 +1,6 @@
 node_modules/
 .expo/
+%ProgramData%/
 npm-debug.*
 *.jks
 *.p8

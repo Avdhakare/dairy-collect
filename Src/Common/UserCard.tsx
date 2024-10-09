@@ -18,7 +18,7 @@ const UserCard=({item,ContainerClick,onPress,disabled}:any)=>{
                     <View className="flex-1 relative">
                         <Text className="text-green-600 text-lg font-bold capitalize ">{item?.name}</Text>
                         <Text className="text-sm font-bold mt-1">{item?.mobileNumber}</Text>
-                        <Text className="text-sm font-bold mt-1 text-indigo-400 ">{item.totalAmount}</Text>
+                        <Text className="text-sm font-bold mt-1 text-indigo-400 ">{(Number(item?.totalAmount?item?.totalAmount:0)+Number(item?.recieved?item?.recieved:0))?.toFixed(2)}</Text>
 
                     </View>
                 </View>
