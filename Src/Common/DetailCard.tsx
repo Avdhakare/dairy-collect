@@ -4,7 +4,7 @@ import React from "react";
 import DatePicker from "./DatePicker";
 import {AntDesign} from '@expo/vector-icons';
 
-const DetailCard=({item,dateSelect,setDateSelect,onPayment,isDate=false}:any)=>{
+const DetailCard=({item,dateSelect,setDateSelect,onPayment,isDate=false,getDate,isDateReadView=false}:any)=>{
     const totalAmount=(Number(item?.totalAmount?item?.totalAmount:0)+Number(item?.recieved?item?.recieved:0));
     const DueAmount=totalAmount &&item.send? totalAmount-item.send:!totalAmount &&item?.send?item?.send:!item?.send && totalAmount? totalAmount:0
     return(
@@ -38,6 +38,16 @@ const DetailCard=({item,dateSelect,setDateSelect,onPayment,isDate=false}:any)=>{
                     <View>
                         <Text className="text-blue-500 text-base font-bold text-right" >End Date</Text>
                         <DatePicker item={dateSelect.updateTimestamp} getDateformPicker={(date)=>setDateSelect({...dateSelect,updateTimestamp:date})}/>
+                    </View>
+                </View>}
+               {isDateReadView &&<View className="fle-1 flex-row justify-between items-center mt-2 ">
+                    <View className="">
+                        <Text className="text-blue-500 text-left text-base font-bold">Start Date</Text>
+                        <Text className="text-gray-500 text-left text-sm mt-1">{getDate(item.createTimestamp)}</Text>
+                    </View>
+                    <View>
+                        <Text className="text-blue-500 text-base font-bold text-right" >End Date</Text>
+                        <Text className="text-gray-500 text-sm mt-1 text-right">{getDate(item.updateTimestamp)}</Text>
                     </View>
                 </View>}
                {onPayment && <TouchableOpacity onPress={onPayment} className=" absolute p-3  right-4">

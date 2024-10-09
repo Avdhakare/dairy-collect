@@ -10,7 +10,6 @@ import { useGlobalStore } from "../Hooks/useGlobalStore";
 import { observer } from "mobx-react";
 import { useIsFocused } from "@react-navigation/native";
 import DairySlip from "../Common/DairySlip";
-import Modal from "react-native-modal";
 import NoMessageCard from "../Common/NoMessageCard";
 import PopOver from "../Common/PopOver";
 
@@ -30,9 +29,9 @@ const DetailsScreen=({navigation,route}:SCREEN)=>{
                     <TouchableOpacity onPress={()=> navigation.navigate(Routes.ADD_DETAILS,{id:store.memberStore?.member?.id})} className="p-3">
                         <AntDesign name="pluscircleo" size={30} color="green" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> navigation.navigate(Routes.SLIP_VIEW_CONTAINER,{id:store.memberStore?.member?.id})} className="p-3">
+                    {/* <TouchableOpacity onPress={()=>createPdf()} className="p-3">
                         <AntDesign name="printer" size={30} color="green" />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             )
         })
@@ -57,7 +56,7 @@ const DetailsScreen=({navigation,route}:SCREEN)=>{
 
         <FlatList
             data={details.details}
-            renderItem={({item})=>(<AmountCard item={item} epochToDateString={store.memberStore.epochToDateString} setIsSlip={setIsSlip}/>)}
+            renderItem={({item})=>(<AmountCard item={item} getDate={store.memberStore.epochToDateString} setIsSlip={setIsSlip}/>)}
             scrollEnabled={true}
             stickyHeaderIndices={[0]}
             onScroll={handleScroll} 

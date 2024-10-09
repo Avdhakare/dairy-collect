@@ -37,7 +37,6 @@ const PaymentScreen=({navigation}:SCREEN)=>{
         setDetails(data)
         setDateSelect(date)
     }
-    console.log(details.payment)
     return(
         <FlatList
             data={details?.payment?.length!==0?details.payment:store.memberStore.member?.payment}
