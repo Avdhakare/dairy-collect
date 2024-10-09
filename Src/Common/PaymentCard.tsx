@@ -3,11 +3,11 @@ import { View,Text,Image } from "react-native"
 import{MaterialIcons} from '@expo/vector-icons';
 import { PAYMENTTYPE } from "../Constant";
 
-const PaymentCard=({item,getDate}:any)=>(
+const PaymentCard=({details,item,getDate}:any)=>(
     <View className="bg-white p-4 rounded-lg shadow-md flex-row items-center space-x-4 m-2">
         <Image source={ require("../../assets/images/profile.png")} className="w-20 h-20 rounded-full mr-4" />
         <View className="flex-1">
-            <Text className="text-xl font-semibold text-green-600">Avdhesh Dhakare</Text>
+            <Text className="text-xl font-semibold text-green-600">{details?.name}</Text>
             <Text className="text-sm  text-gray-500">{item?.type===PAYMENTTYPE.CREDIT?`Recieved on ${getDate(item.date,'MONTH')}`:`Sent on ${getDate(item.date,'MONTH')}`}</Text>
         </View>
         <View className="text-right">

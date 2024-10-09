@@ -85,6 +85,7 @@ export class memberStore  extends BaseStore{
         paymentData.push({...data})
         let debitAmount=0;
         let creditAmount=0;
+        this.member.updateTimestamp=data.date>=this.member.updateTimestamp? data.date:this.member.updateTimestamp
         paymentData.map(item=>{
             if(item.type===PAYMENTTYPE.DEBIT) debitAmount=debitAmount+Number(item.amount)
             if(item.type===PAYMENTTYPE.CREDIT) creditAmount=creditAmount+Number(item.amount)

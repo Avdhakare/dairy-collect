@@ -33,15 +33,15 @@ const PaymentScreen=({navigation}:SCREEN)=>{
     },[store.memberStore.members])
     const DataFilterBaseOnDate=(date:{createTimestamp:EpochTimeStamp,updateTimestamp:EpochTimeStamp})=>{
         const data:PROFILE=JSON.parse(JSON.stringify(store.memberStore.member));
-        data.details=store.memberStore.member.details.filter((item:any)=>(item.date>=date.createTimestamp && item.date<=date.updateTimestamp))
+        data.payment=store.memberStore.member.payment.filter((item:any)=>(item.date>=date.createTimestamp && item.date<=date.updateTimestamp))
         setDetails(data)
         setDateSelect(date)
     }
-   
+    console.log(details.payment)
     return(
         <FlatList
-            data={store.memberStore.member?.payment?store.memberStore.member?.payment:[]}
-            renderItem={({item})=>( <PaymentCard item={item} getDate={store.memberStore.epochToDateString}/>)}
+            data={details?.payment?.length!==0?details.payment:store.memberStore.member?.payment}
+            renderItem={({item})=>( <PaymentCard details={details} item={item} getDate={store.memberStore.epochToDateString}/>)}
             scrollEnabled={true}
             stickyHeaderIndices={[0]}
             ListHeaderComponent={
