@@ -38,7 +38,6 @@ return(
         <Stack.Screen name={Routes.EDIT_USER} component={UpdateUserScreen}  options={{title:"Update User Details"}} />
         <Stack.Screen name={Routes.ADD_DETAILS} component={EditDetailsScreen}  options={{title:"Add Information"}} />
         <Stack.Screen name={Routes.PRICE} component={PriceScreen}  options={{title:"Update Price"}} />
-        <Stack.Screen name={Routes.SLIP_VIEW_CONTAINER} component={SlipViewScreen}  options={{title:"ALL Slip Details"}} />
         <Stack.Screen name={Routes.PAYMENT} component={PaymentScreen}  options={{title:"ALL Payment Details"}} />
 
       </Stack.Group>
